@@ -1,0 +1,156 @@
+{
+    "adminDetails": {
+        "user": "admin",
+        "password": "admin"
+    },
+
+    "apperals": [{
+            "productId": 1,
+            "name": "Shirt",
+            "category": "T-shirt",
+            "price": 699,
+            "color": "Black",
+            "size": [
+                "small",
+                "medium",
+                "large"
+            ],
+            "images": {
+                "image01": "path",
+                "image02": "path",
+                "image03": "path"
+            },
+            "description": "This is an despriction"
+        },
+        {
+            "productId": 12,
+            "name": "Hoodie",
+            "category": "Hoodie",
+            "price": 1600,
+            "color": "Grey",
+            "size": [
+                "small",
+                "large"
+            ],
+            "images": {
+                "image01": "path",
+                "image02": "path",
+                "image03": "path"
+            },
+            "description": "This is an despriction"
+        },
+        {
+            "productId": 11,
+            "name": "SweatShirt",
+            "category": "SweatShirt",
+            "price": 700,
+            "color": "Orange",
+            "size": [
+                "small",
+                "medium",
+                "large"
+            ],
+            "images": {
+                "image01": "path",
+                "image02": "path",
+                "image03": "path"
+            },
+            "description": "This is an despriction"
+        },
+        {
+            "productId": 101,
+            "name": "Long sleeve t-shirt",
+            "category": "Long sleeve t-shirt",
+            "price": 1700,
+            "color": "Red",
+            "size": [
+                "medium",
+                "large"
+            ],
+            "images": {
+                "image01": "path",
+                "image02": "path",
+                "image03": "path"
+            },
+            "description": "This is an despriction"
+        }
+    ],
+    "users": [{
+            "id": 1,
+            "fname": "Sulash",
+            "lname": "Manandhar",
+            "email": "suyash.manandhar@yahoo.com",
+            "password": "password",
+            "phoneNO": 9841476797,
+            "address": {
+                "province": 3,
+                "district": "kathmandu",
+                "location": "New Road"
+            }
+        },
+        {
+            "id": 2,
+            "fname": "Sulash",
+            "lname": "Manandhar",
+            "email": "suyash.manandhar@yahoo.com",
+            "password": "password",
+            "phoneNO": 9841476797,
+            "address": {
+                "province": 3,
+                "district": "kathmandu",
+                "location": "New Road"
+            }
+        },
+        {
+            "id": 3,
+            "fname": "Sulash",
+            "lname": "Manandhar",
+            "email": "suyash.manandhar@yahoo.com",
+            "password": "password",
+            "phoneNO": 9841476797,
+            "address": {
+                "province": 3,
+                "district": "kathmandu",
+                "location": "New Road"
+            }
+        }
+    ],
+    "accessories": [{
+            "productId": 1,
+            "name": "Key Chain",
+            "category": "Key Chain",
+            "price": 400,
+            "color": "Black",
+            "description": "This is an despriction"
+        },
+        {
+            "productId": 12,
+            "name": "Wallpaper",
+            "category": "Wallpaper",
+            "price": 500,
+            "color": "Grey",
+            "description": "This is an despriction"
+        },
+        {
+            "productId": 101,
+            "name": "Drinkware",
+            "category": "Drinkware",
+            "price": 5300,
+            "color": "red",
+            "description": "This is an despriction"
+        }
+    ],
+    "banned-users": [{
+            "id": 1,
+            "fname": "Sulash",
+            "lname": "Manandhar",
+            "email": "suyash.manandhar@yahoo.com"
+        },
+        {
+            "id": 2,
+            "fname": "official",
+            "lname": "banned",
+            "email": "official.banned@yahoo.com"
+        }
+    ]
+}
