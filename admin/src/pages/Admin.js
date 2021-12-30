@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import '../stylesheets/header.css'
 import Apparels from '../components/Apparels'
 import Accessories from '../components/Accessories'
+import AddApparel from '../components/Add/AddApparel'
 
 
 export default class Index extends Component {
@@ -126,8 +127,7 @@ export default class Index extends Component {
                         <Route exact path = "/users" component = {Users}></Route>
                         <Route path = "/apparels" component = {Apparels}></Route>
                         <Route path = "/accessories" component = {Accessories}></Route>
-                        
-                        
+                        <Route path = "/addApparels" component = {AddApparel}></Route>
                     </Switch>                
                 </section>
             </Router>

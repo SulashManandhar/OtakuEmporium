@@ -1,26 +1,36 @@
-.table {
-    border-collapse: collapse;
-    width: 100%;
+.main {
+    padding: 10px;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
 .header {
     margin: 10px 0px;
     font-size: 28px;
+    float: left;
 }
 
-.header button {
+.crudButton {
     float: right;
     margin-right: 10px;
 }
 
-.main {
-    padding: 10px;
+.crudButton button {
+    margin: 10px;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
 }
 
 th,
 td {
     padding: 8px;
-    text-align: left;
     border-bottom: 1px solid #DDD;
     overflow: hidden;
     text-overflow: ellipsis;
