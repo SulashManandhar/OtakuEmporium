@@ -136,8 +136,3 @@ export default class Index extends Component {
     }
 }
 
-
-// <div className={ `${style.user} ${style.clearfix}` }>
-    // <p> Welcome, { this.props.name } </p>
-    // <button onClick={ this.props.Logout }className="btn btn-danger"> Logout < IoExit /> </button>
-    // </div>

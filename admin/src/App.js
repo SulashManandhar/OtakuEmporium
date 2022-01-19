@@ -17,7 +17,12 @@ function App() {
   const Login = details =>{
     // console.log(details);
     if(details.email===adminUser.email && details.password===adminUser.password){
-      console.log("Logged In");
+      sessionStorage.clear();
+      sessionStorage.setItem('admin-uname',details.email);
+      sessionStorage.setItem('admin-pass',details.password);
+      console.log("Added to session");
+      console.log();
+      
       setUser({
         email:details.email,
         password:details.password
@@ -31,11 +36,13 @@ function App() {
   }
   const Logout = () =>{
     console.log("Log out");
+    sessionStorage.removeItem("admin-uname");
+    sessionStorage.removeItem("admin-pass");
     setUser({email:"",password:""});
   }
   return (
     <>   
-        {(user.email !== "")?(
+        {(sessionStorage.getItem("admin-pass") === "admin")?(
         <div>            
             <Admin name ={user.email} Logout={Logout}/>
          

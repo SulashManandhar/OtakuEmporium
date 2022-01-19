@@ -12,42 +12,35 @@ export default class Apparels extends Component {
             flag:null,
         }
     }
-    componentDidMount(){
-        axios.get('http://localhost:3004/apparels')
-        .then(res=>{
+
+    getUsers = () => {
+        axios
+          .get("http://localhost:3004/apparels")
+          .then((res) => {
             this.setState({
-                data:res.data
-            })
-        })
-        .catch(error=>{
+              data: res.data,
+            });
+          })
+          .catch((error) => {
             console.log("Error!!!");
-        })
+          });
+      };
+    
+    componentDidMount(){
+       this.getUsers();
     }
     componentDidUpdate(){
-        axios.get('http://localhost:3004/apparels')
-        .then(res=>{
-            this.setState({
-                data:res.data
-            })
-        })
-        .catch(error=>{
-            console.log("Error!!!");
-        })
+        this.getUsers();
     }
 
-    getId=(event)=>{ 
-        this.setState({
-            flag:event.target.value,
-        })
-        console.log(this.state.flag)
-    }
 
-    deleteData=event=>{
+    handleDelete = (itemId)=>{
+        console.log(itemId);
         var confimation = window.confirm(
             "Do you want to delete this data?(You cannot undo this command)"
         )
         if(confimation){
-            axios.delete('http://localhost:3004/apparels/'+this.state.flag)            
+            axios.delete('http://localhost:3004/apparels/'+itemId)            
             .then(res=>{
                 console.log(res);
                 console.log("Successfully deleted data.")
@@ -63,6 +56,10 @@ export default class Apparels extends Component {
             alert("Data was not deleted.");
         }     
     }
+
+   
+
+
     render() {
         return (
             <>
@@ -72,9 +69,7 @@ export default class Apparels extends Component {
                             <span>Manage Products</span>     
                         </div>
                         <div className={style.crudButton}>
-                            <Link to="/addApparels"><button type="button" class="btn btn-success">Add <AiOutlinePlusCircle/></button></Link>
-                            <button type="button" className="btn btn-warning" >Edit <AiOutlineEdit/></button>
-                            <button  type="button" className="btn btn-danger" onClick={this.deleteData}>Delete <AiOutlineMinusCircle/></button>
+                            <Link to="/addApparels"><button type="button" className="btn btn-success">Add <AiOutlinePlusCircle/></button></Link>
                         </div>
                         
                         {/* Clearfix  */}
@@ -85,23 +80,32 @@ export default class Apparels extends Component {
                         <table className={style.table}>
                             <thead>
                                 <tr>
-                                    <th></th>
+                                
                                     <th>Product Id</th>
                                     <th>Product Category</th>
                                     <th>Product Name</th>
                                     <th>Price</th>
-                                    <th>Color</th>    
+                                    <th>Color</th>  
+                                    <th></th>  
                                 </tr>
                             </thead>
                             <tbody>
                                 {this.state.data.map(item=>(
                                     <tr key={item.id}>
-                                        <td> <input type="radio" onClickCapture={this.getId} value={item.id} id={item.id} name="userId"/></td>
+                                       
                                         <td>{item.id}</td>
                                         <td>{item.category}</td>
                                         <td>{item.name}</td>
                                         <td>{item.price}</td>
-                                        <td>{item.color}</td>                            
+                                        <td>{item.color}</td> 
+                                        <td> 
+                                            <button  type="button" className="btn btn-danger"  onClick={(e)=>{
+                                                e.preventDefault();
+                                                this.handleDelete(item.id)
+                                            }}>Delete <AiOutlineMinusCircle/></button> 
+                                        </td>     
+                                            
+                                        <td><button type="button" className="btn btn-warning" >Edit <AiOutlineEdit/></button> </td>                                                      
                                     </tr>
                                 ))}
                             </tbody>
