@@ -1,0 +1,23 @@
+{
+    "name": "reactapp",
+    "version": "1.0.0",
+    "description": "React Server",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "server": "nodemon server.js",
+        "client": "npm start --prefix otaku-admin",
+        "dev": "concurrently \"npm run server\" \"npm run client\" "
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.17.2",
+        "express-fileupload": "^1.2.1"
+    },
+    "devDependencies": {
+        "concurrently": "^7.0.0",
+        "nodemon": "^2.0.15"
+    }
+}
