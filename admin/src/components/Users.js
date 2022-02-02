@@ -30,20 +30,18 @@ export default class Users extends Component {
   componentDidMount() {
     this.getUsers();
   }
-  componentDidUpdate(){
+  componentDidUpdate() {
     this.getUsers();
-}
-
+  }
 
   banData = (itemId) => {
-    let userToBeModified = this.state.data.filter(
-      (item) => item.id === itemId
-    );
+    let userToBeModified = this.state.data.filter((item) => item.id === itemId);
     console.log(userToBeModified);
     let isBan = !userToBeModified[0].ban;
     //isBan?console.log("Ban is true"):console.log("ban is false");
     console.log(isBan);
-    axios.patch("http://localhost:3004/users/" + itemId, {
+    axios
+      .patch("http://localhost:3004/users/" + itemId, {
         ban: isBan,
       })
       .then((res) => {
@@ -56,8 +54,9 @@ export default class Users extends Component {
   };
 
   deleteData = (itemId) => {
-
-    var confimation = window.confirm("Do you want to delete this data?(You cannot undo this command)");
+    var confimation = window.confirm(
+      "Do you want to delete this data?(You cannot undo this command)"
+    );
     if (confimation) {
       axios
         .delete("http://localhost:3004/users/" + itemId)
@@ -87,7 +86,7 @@ export default class Users extends Component {
           <hr />
           <table className={style.table}>
             <thead>
-              <tr>               
+              <tr>
                 <th>User ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -106,15 +105,34 @@ export default class Users extends Component {
                   <td className={style.email}>{item.email}</td>
                   <td>{item.ban ? "Yes" : "No"}</td>
                   {/* Ban Data  */}
-                  <td> <button type="button" className="btn btn-secondary" onClick={(e)=>{
-                      e.preventDefault();
-                      this.banData(item.id)
-                      }}>Ban <HiOutlineBan /></button></td>
-                      {/* Delete Data  */}
-                  <td> <button type="button"className="btn btn-danger" onClick={(e)=>{
-                      e.preventDefault();
-                      this.deleteData(item.id)
-                      }}> Delete <AiOutlineMinusCircle /></button></td>
+                  <td>
+                    {" "}
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        this.banData(item.id);
+                      }}
+                    >
+                      Ban <HiOutlineBan />
+                    </button>
+                  </td>
+                  {/* Delete Data  */}
+                  <td>
+                    {" "}
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        this.deleteData(item.id);
+                      }}
+                    >
+                      {" "}
+                      Delete <AiOutlineMinusCircle />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -1,8 +1,10 @@
-form {
+.form {
     height: 100%;
-    /* background-color: #EBEBEB; */
-    text-align: center;
     margin: auto;
+}
+
+.login {
+    text-align: center !important;
 }
 
 .loginMainContainer {
@@ -19,7 +21,7 @@ form {
     width: 100%;
     font-size: 2em;
     font-weight: bold;
-    color: #0AC5A8;
+    color: #0ac5a8;
     line-height: 2.4em;
     margin-top: 40px;
 }
@@ -31,12 +33,12 @@ form {
 }
 
 .errorDisplay {
-    color: #DC3545;
+    color: #dc3545;
     font-size: 15px;
     margin: 5px;
 }
 
-input:not([type=submit]) {
+input:not([type="submit"]) {
     width: 70%;
     padding: 5px;
     border: 1px solid;
@@ -47,7 +49,7 @@ input:not([type=submit]) {
     margin: 12px;
 }
 
-input[type=submit] {
+input[type="submit"] {
     width: 40%;
     padding: 6px;
     text-align: center;
