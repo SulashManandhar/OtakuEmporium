@@ -1,0 +1,97 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+export const HeroSlide = () => {
+  const [data, setData] = useState([]);
+  const [carouselItems, setCarouselItems] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4600/getSlider")
+      .then((res) => {
+        setData(res.data);
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log("Error!!!");
+      });
+  }, []);
+
+  useEffect(() => {
+    if (data.length) {
+      let carouselItems = [];
+      data.foreach((item) => {
+        carouselItems.push(
+          <div className="carousel-item active">
+            <img src={item.imagePath} className="d-block w-100" alt="..." />
+          </div>
+        );
+      });
+      setCarouselItems(carouselItems);
+    }
+  }, [data]);
+
+  return (
+    <>
+      <div
+        id="carouselExampleControls"
+        className="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div className="carousel-inner">
+          {/* //something  */}
+          {carouselItems}
+          {/* something ending  */}
+
+          {/* <div className="carousel-item active">
+              <img
+                src={process.env.PUBLIC_URL + "images/slide2.jpg"}
+                className="d-block w-100"
+                alt="..."
+              />
+            </div>
+            <div className="carousel-item">
+              <img
+                src={process.env.PUBLIC_URL + "images/slide5.jpg"}
+                className="d-block w-100"
+                alt="..."
+              />
+            </div>
+            <div className="carousel-item">
+              <img
+                src={process.env.PUBLIC_URL + "images/slide4.jpg"}
+                className="d-block w-100"
+                alt="..."
+              />
+            </div> */}
+        </div>
+        <button
+          className="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleControls"
+          data-bs-slide="prev"
+        >
+          <span
+            className="carousel-control-prev-icon"
+            aria-hidden="true"
+          ></span>
+          <span className="visually-hidden">Previous</span>
+        </button>
+        <button
+          className="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleControls"
+          data-bs-slide="next"
+        >
+          <span
+            className="carousel-control-next-icon"
+            aria-hidden="true"
+          ></span>
+          <span className="visually-hidden">Next</span>
+        </button>
+      </div>
+    </>
+  );
+};
+
+export default HeroSlide;

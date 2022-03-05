@@ -5,7 +5,9 @@ import { DiReact } from "react-icons/di";
 import { BsFolderPlus } from "react-icons/bs";
 import { HiUsers } from "react-icons/hi";
 import { GrMenu } from "react-icons/gr";
+import { IoLinkSharp } from "react-icons/io5";
 import { AiOutlineSetting } from "react-icons/ai";
+import { MdOutlineSlideshow } from "react-icons/md";
 import Dashboard from "../components/Dashboard";
 import Setting from "../components/Setting";
 import Users from "../components/Users";
@@ -16,6 +18,15 @@ import Accessories from "../components/Accessories";
 import AddApparel from "../components/Add/AddApparel";
 import classNames from "classnames";
 import { EditApparel } from "../components/Edit/EditApparel";
+import { AddAccessories } from "../components/Add/AddAccessories";
+import { EditAccessories } from "../components/Edit/EditAccessories";
+import Drinkware from "../components/Drinkware";
+import AddDrinkware from "../components/Add/AddDrinkware";
+import { EditDrinkware } from "../components/Edit/EditDrinkware";
+import NavLink from "./NavLink";
+import AddLink from "../components/Add/AddLink";
+import SlideShow from "./SlideShow";
+import AddSlider from "../components/Add/AddSlider";
 
 export default class Index extends Component {
   state = {
@@ -73,12 +84,12 @@ export default class Index extends Component {
             {/* Posts  */}
             <li>
               <div className="iocn-link">
-                <a href="#">
+                <Link to="#">
                   <i>
                     <BsFolderPlus />
                   </i>
                   <span className="link_name">Posts</span>
-                </a>
+                </Link>
                 <i className="arrow" onClick={this.handlePostSubMenuClose}>
                   <BiArrowFromTop />
                 </i>
@@ -102,11 +113,44 @@ export default class Index extends Component {
                   <Link to="/accessories">Accessories</Link>
                 </li>
                 <li>
-                  <a href="#">Masks</a>
+                  <Link to="/drinkware">Drinkware</Link>
                 </li>
               </ul>
             </li>
 
+            {/* Navbar Links  */}
+            <li>
+              <Link to="/navLinks">
+                <i>
+                  <IoLinkSharp />
+                </i>
+                <span className="link_name">Navabar</span>
+              </Link>
+              <ul className="sub-menu blank">
+                <li>
+                  <Link className="link_name" to="/navLinks">
+                    Navbar
+                  </Link>
+                </li>
+              </ul>
+            </li>
+
+            {/* Slider  */}
+            <li>
+              <Link to="/slider">
+                <i>
+                  <MdOutlineSlideshow />
+                </i>
+                <span className="link_name">Slider</span>
+              </Link>
+              <ul className="sub-menu blank">
+                <li>
+                  <Link className="link_name" to="/slider">
+                    Slider
+                  </Link>
+                </li>
+              </ul>
+            </li>
             {/* Users  */}
             <li>
               <Link to="/users">
@@ -157,23 +201,6 @@ export default class Index extends Component {
                 </li>
               </ul>
             </li>
-            {/* Profile  */}
-            <li>
-              <div className="profile-details">
-                <div className="profile-content">
-                  <img
-                    src={process.env.PUBLIC_URL + "/images/profile1.jpg"}
-                    alt="profileImg"
-                  />
-                </div>
-                <div className="name-job">
-                  <div className="profile_name">{this.props.name}</div>
-                </div>
-                <i onClick={this.props.Logout}>
-                  <BiLogOut />
-                </i>
-              </div>
-            </li>
           </ul>
         </div>
 
@@ -188,12 +215,29 @@ export default class Index extends Component {
 
           <Switch>
             <Route exact path="/" component={Dashboard}></Route>
+
             <Route exact path="/setting" component={Setting}></Route>
             <Route exact path="/users" component={Users}></Route>
+
+            {/* Apparels */}
             <Route path="/apparels" component={Apparels}></Route>
-            <Route path="/accessories" component={Accessories}></Route>
             <Route path="/addApparels" component={AddApparel}></Route>
             <Route path="/editApparels" component={EditApparel}></Route>
+            {/* Accessories  */}
+            <Route path="/accessories" component={Accessories}></Route>
+            <Route path="/addAccessories" component={AddAccessories}></Route>
+            <Route path="/editAccessories" component={EditAccessories}></Route>
+
+            {/* Drinkware */}
+            <Route path="/drinkware" component={Drinkware}></Route>
+            <Route path="/addDrinkware" component={AddDrinkware}></Route>
+            <Route path="/editDrinkware" component={EditDrinkware}></Route>
+
+            <Route exact path="/navLinks" component={NavLink}></Route>
+            <Route exact path="/addLink" component={AddLink}></Route>
+
+            <Route exact path="/slider" component={SlideShow}></Route>
+            <Route exact path="/addSlider" component={AddSlider}></Route>
           </Switch>
         </section>
       </Router>

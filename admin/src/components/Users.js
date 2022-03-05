@@ -16,7 +16,7 @@ export default class Users extends Component {
 
   getUsers = () => {
     axios
-      .get("http://localhost:3004/users")
+      .get("http://localhost:4600/getUsers")
       .then((res) => {
         this.setState({
           data: res.data,
@@ -36,17 +36,20 @@ export default class Users extends Component {
 
   banData = (itemId) => {
     let userToBeModified = this.state.data.filter((item) => item.id === itemId);
-    console.log(userToBeModified);
-    let isBan = !userToBeModified[0].ban;
-    //isBan?console.log("Ban is true"):console.log("ban is false");
-    console.log(isBan);
+    //console.log(userToBeModified);
+    let isBan = userToBeModified[0].ban === 0 ? 1 : 0;
+    //console.log(isBan);
     axios
-      .patch("http://localhost:3004/users/" + itemId, {
-        ban: isBan,
+      .put("http://localhost:4600/banUser", {
+        userId: itemId,
+        banValue: isBan,
       })
       .then((res) => {
         this.getUsers();
-        console.log(res);
+        //console.log(res);
+        console.log(
+          `User Id: ${itemId} is ${isBan === 1 ? "" : "not"} banned.`
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -59,9 +62,9 @@ export default class Users extends Component {
     );
     if (confimation) {
       axios
-        .delete("http://localhost:3004/users/" + itemId)
+        .delete("http://localhost:4600/deleteUser/" + itemId)
         .then((res) => {
-          this.getUsers();
+          // this.getUsers();
           console.log(res);
           console.log("Successfully deleted data.");
           alert("Successfully delete the data");
@@ -80,10 +83,12 @@ export default class Users extends Component {
     return (
       <>
         <div className={style.main}>
-          <div className={style.header}>
-            <span>Manage Users</span>
+          <div className={`${style.header}`}>
+            <span>Manage Users </span>
           </div>
+          <div className={style.clearfix}></div>
           <hr />
+
           <table className={style.table}>
             <thead>
               <tr>
@@ -99,11 +104,11 @@ export default class Users extends Component {
             <tbody>
               {this.state.data.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
+                  <td className={style.id}>{item.id}</td>
                   <td>{item.fname}</td>
                   <td>{item.lname}</td>
-                  <td className={style.email}>{item.email}</td>
-                  <td>{item.ban ? "Yes" : "No"}</td>
+                  <td className={style.id}>{item.email}</td>
+                  <td>{item.ban === 1 ? "Yes" : "No"}</td>
                   {/* Ban Data  */}
                   <td>
                     {" "}

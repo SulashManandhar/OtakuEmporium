@@ -7,43 +7,37 @@ export const AddApparel = () => {
   //States
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("Choose File");
-  const [uploadedFile, setUploadedFile] = useState({});
+  //const [uploadedFile, setUploadedFile] = useState({});
 
   //OnChange update filename
   const onChange = (e) => {
     setFile(e.target.files[0]);
     setFilename(e.target.files[0].name);
-    console.log(`Filename:${filename}`);
   };
 
   //adds information to the json (name of product, description, image path, size color)
   const addData = () => {
-    var listArray = [];
-    var checkboxes = document.querySelectorAll(".btn-check");
-
-    for (var checkbox of checkboxes) {
-      if (checkbox.checked) {
-        //console.log("checkbox:"+checkbox.value);
-        listArray.push(checkbox.value);
-      }
-    }
-
     axios
-      .post("http://localhost:3004/apparels", {
+      .post("http://localhost:4600/addApparels", {
         name: document.getElementById("product-name").value,
         category: document.getElementById("product-category").value,
         description: document.getElementById("product-description").value,
         color: document.getElementById("product-color").value,
-        size: listArray,
+        smallSize: document.getElementById("small").checked ? 1 : 0,
+        mediumSize: document.getElementById("medium").checked ? 1 : 0,
+        largeSize: document.getElementById("large").checked ? 1 : 0,
         price: document.getElementById("product-price").value,
-        image: `/uploads/${filename}`,
+        imagePath: `/uploads/${filename}`,
       })
       .then((res) => {
         console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
-  //SUbmitting Image
+  // SUbmitting Image and calling add function
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -55,9 +49,6 @@ export const AddApparel = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      const { fileName, filePath } = res.data;
-      setUploadedFile({ fileName, filePath });
       console.log("File Uploaded");
 
       addData(); //adding data to the database

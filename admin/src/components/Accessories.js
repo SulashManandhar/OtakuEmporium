@@ -18,9 +18,9 @@ export default class Accessories extends Component {
       referenceValue: null,
     };
   }
-  getUsers = () => {
+  getAccessories = () => {
     axios
-      .get("http://localhost:3004/accessories")
+      .get("http://localhost:4600/getAccessories")
       .then((res) => {
         this.setState({
           data: res.data,
@@ -32,10 +32,10 @@ export default class Accessories extends Component {
   };
 
   componentDidMount() {
-    this.getUsers();
+    this.getAccessories();
   }
   componentDidUpdate() {
-    this.getUsers();
+    this.getAccessories();
   }
 
   handleDelete = (itemId) => {
@@ -45,7 +45,7 @@ export default class Accessories extends Component {
     );
     if (confimation) {
       axios
-        .delete("http://localhost:3004/accessories/" + itemId)
+        .delete("http://localhost:4600/deleteAccessories/" + itemId)
         .then((res) => {
           console.log(res);
           console.log("Successfully deleted data.");
@@ -68,7 +68,7 @@ export default class Accessories extends Component {
             <span>Manage Accessories</span>
           </div>
           <div className={style.crudButton}>
-            <Link to="/addApparels">
+            <Link to="/addAccessories">
               <button type="button" className="btn btn-success">
                 Add <AiOutlinePlusCircle />
               </button>
@@ -93,8 +93,8 @@ export default class Accessories extends Component {
             </thead>
             <tbody>
               {this.state.data.map((item) => (
-                <tr key={item.productId}>
-                  <td>{item.productId}</td>
+                <tr key={item.id}>
+                  <td className={style.id}>{item.id}</td>
                   <td>{item.category}</td>
                   <td>{item.name}</td>
                   <td>{item.price}</td>
@@ -130,7 +130,7 @@ export default class Accessories extends Component {
                       <Link
                         className="link"
                         to={{
-                          pathname: "/editApparels",
+                          pathname: "/editAccessories",
                           state: {
                             editId: this.state.referenceValue,
                           },

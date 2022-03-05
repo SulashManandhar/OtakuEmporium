@@ -1,0 +1,268 @@
+CREATE TABLE users(
+    id int not null primary key auto_increment,
+    fname varchar(40) not null,
+    lname varchar(40) not null,
+    email varchar(100) not null,
+    password varchar(100) not null,
+    phone varchar(12) not null,
+    province int not null,
+    district varchar(40) not null,
+    location varchar(40) not null,
+    ban int not null
+);
+
+INSERT INTO users (fname,lname,email, password, phone, province, district, location, ban) VALUES(
+'Suyash',
+'Manandhar',
+'suyash.manandhar@gmail.com',
+'XYZ',
+'9841476797',
+3,
+'kathmandu',
+'New Road',
+1
+);
+
+INSERT INTO users (fname,lname,email, password, phone, province, district, location, ban) VALUES(
+'Sulash',
+'Manandhar',
+'sulash.manandhar@gmail.com',
+'XYZ',
+'9841476797',
+3,
+'kathmandu',
+'New Road',
+0
+);
+
+//ban user
+UPDATE users SET ban = 1 WHERE id = 1;
+
+//delete user
+DELETE FROM users WHERE id = 1;
+
+//Apparel
+CREATE TABLE Apparels(
+    id int not null primary key auto_increment,
+    name varchar(80) not null,
+    category varchar(80) not null,
+    description text(120) not null,
+    color varchar (16),
+    small_size int not null,
+    medium_size int not null,
+    large_size int not null,
+    price int not null,
+    imagePath varchar(160) not null
+);
+
+INSERT INTO apparels (
+    name,
+    category,
+    description,
+    color,
+    small_size,
+    medium_size,
+    large_size,
+    price,
+    imagePath)
+    VALUES (
+        'One Piece T-Shirt',
+        'Full-sleeve T-Shirt',
+        'One Piece Luffy T-Shirt',
+        'Red',
+        1,
+        1,
+        0,
+        1999,
+        '/images/onePiece.jpg'
+);
+
+INSERT INTO apparels (
+        name,
+        category,
+        description,
+        color,
+        small_size,
+        medium_size,
+        large_size,
+        price,
+        imagePath)
+        VALUE (
+            'Black Cover Hoodie',
+            'Hoodie',
+            'Black Cover Hoodie-Astra',
+            'Red',
+            1,
+            0,
+            1,
+            1900,
+            '/upload/BlackClover.jpg'
+);
+
+//Update Apparel
+Update apparels SET 
+    name=?,
+    category=?,
+    description=?,
+    color=?,
+    small_size=?,
+    medium_size=?,
+    large_size=?,
+    price=?,
+    imagePath=?
+    WHERE
+        id = ?
+
+Update apparels SET 
+    name='T-shirt',
+    category='Full-sleeve T-shirt',
+    description='Firy Tail T-shirt',
+    color='Black',
+    small_size=1,
+    medium_size=1,
+    large_size=1,
+    price=1099,
+    imagePath='/anywhere'
+    WHERE
+        id = 5; 
+
+
+
+//Accessories
+CREATE TABLE accessories(
+    id int not null primary key auto_increment,
+    name varchar(80) not null,
+    category varchar(80) not null,
+    description text(120) not null,
+    color varchar (16),
+    price int not null,
+    imagePath varchar(160) not null
+);
+
+INSERT INTO accessories (
+        name,
+        category,
+        description,
+        color,
+        price,
+        imagePath)
+        VALUE (
+            'One Piece Masks',
+            'Masks',
+            'One Piece Anime Masks',
+            'Red',
+            250,
+            '/upload/masks.jpg'
+);
+
+INSERT INTO accessories (
+        name,
+        category,
+        description,
+        color,
+        price,
+        imagePath)
+        VALUE (
+            ?,
+            ?,
+            ?,
+            ?,
+            ?,
+            ?'
+);
+
+CREATE TABLE drinkware(
+    id int not null primary key auto_increment,
+    name varchar(80) not null,
+    description text(120) not null,
+    color varchar (16),
+    price int not null,
+    imagePath varchar(160) not null
+);
+
+INSERT INTO drinkware (
+        name,
+        description,
+        color,
+        price,
+        imagePath)
+        VALUE (
+            'Normal plain ceramic mug',
+            'Normal plain ceramic mug',
+            'White',
+            1264,
+            '/uploads/randomPic.jp'
+);
+
+INSERT INTO drinkware (
+        name,
+        description,
+        color,
+        price,
+        imagePath)
+        VALUE (
+            ?,
+            ?,
+            ?,
+            ?,
+            ?'
+);
+
+//admin
+Create table admin(
+    id int not null primary key auto_increment,
+    adminName varchar(30) not null,
+    adminPassword varchar(250) not null
+);
+
+CREATE TABLE hero_slide(
+    id int not null primary key auto_increment,
+    title varchar(60) not null,
+    description varchar(100),
+    imagePath varchar(290)
+);
+
+INSERT INTO hero_slide (
+    title,
+    description,
+    imagePath
+) VALUE(
+    "Title 2",
+    "This is an description",
+    "images/slide5.jpg"
+)
+
+CREATE TABLE slide_show(
+    id int not null primary key auto_increment,
+    title varchar(60) not null,
+    imagePath varchar(290)
+)
+
+INSERT INTO slide_show(
+    title,
+    imagePath
+) VALUES (
+    "Rick and Morty Shirt",
+    "/images/slide5.jpg"
+);
+
+CREATE TABLE nav_links(
+    id int not null primary key auto_increment,
+    tab_name varchar(12) not null,
+    tab_link varchar(12) not null
+);
+
+INSERT INTO nav_links(
+    tab_name,
+    tab_link
+) VALUES 
+('New Arrivals', '/newArrival'), 
+('Apparels', '/apparels'), 
+('Drinkware', '/drinkware'),
+('Accessories', '/accessories');
+
+INSERT INTO nav_links(
+    tab_name,
+    tab_link
+) VALUE 
+(?, ?);

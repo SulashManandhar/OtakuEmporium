@@ -19,9 +19,9 @@ export default class Apparels extends Component {
     };
   }
 
-  getUsers = () => {
+  getApparels = () => {
     axios
-      .get("http://localhost:3004/apparels")
+      .get("http://localhost:4600/getApparels")
       .then((res) => {
         this.setState({
           data: res.data,
@@ -33,10 +33,10 @@ export default class Apparels extends Component {
   };
 
   componentDidMount() {
-    this.getUsers();
+    this.getApparels();
   }
   componentDidUpdate() {
-    this.getUsers();
+    this.getApparels();
   }
 
   handleDelete = (itemId) => {
@@ -46,9 +46,9 @@ export default class Apparels extends Component {
     );
     if (confimation) {
       axios
-        .delete("http://localhost:3004/apparels/" + itemId)
+        .delete("http://localhost:4600/deleteApparels/" + itemId)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           console.log("Successfully deleted data.");
           alert("Successfully delete the data");
         })
@@ -67,7 +67,7 @@ export default class Apparels extends Component {
         <div className={style.main}>
           {/* Header  */}
           <div className={style.header}>
-            <span>Manage Products</span>
+            <span>Manage Apparels</span>
           </div>
           <div className={style.crudButton}>
             <Link to="/addApparels">
@@ -96,7 +96,7 @@ export default class Apparels extends Component {
             <tbody>
               {this.state.data.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
+                  <td className={style.id}>{item.id}</td>
                   <td>{item.category}</td>
                   <td>{item.name}</td>
                   <td>{item.price}</td>

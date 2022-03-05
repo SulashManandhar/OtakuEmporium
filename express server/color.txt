@@ -1,0 +1,7 @@
+DC3545 - red,
+0AC5A8 - green
+2C3C5B - black
+869CB8 - clay
+EBEBEB - grey
+F5F5F5 - white
+

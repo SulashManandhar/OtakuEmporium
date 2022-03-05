@@ -5,38 +5,33 @@ import "../../stylesheets/apparel.css";
 import "../../stylesheets/bootstrap.min.css";
 
 export const EditApparel = () => {
-  //props
+  //props sent from Apparel
   const location = useLocation();
-  const { editId } = location.state;
+  const { editId } = location.state; //id of selected user
 
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("Choose File");
-  const [uploadedFile, setUploadedFile] = useState({});
   const [apparelData, setApparelData] = useState([]);
 
   const addData = () => {
-    var listArray = [];
-    var checkboxes = document.querySelectorAll(".btn-check");
-
-    for (var checkbox of checkboxes) {
-      if (checkbox.checked) {
-        //console.log("checkbox:"+checkbox.value);
-        listArray.push(checkbox.value);
-      }
-    }
-
     axios
-      .patch("http://localhost:3004/apparels/" + editId, {
+      .put("http://localhost:4600/editApparels", {
+        id: editId,
         name: document.getElementById("product-name").value,
         category: document.getElementById("product-category").value,
         description: document.getElementById("product-description").value,
         color: document.getElementById("product-color").value,
-        size: listArray,
+        smallSize: document.getElementById("small").checked ? 1 : 0,
+        mediumSize: document.getElementById("medium").checked ? 1 : 0,
+        largeSize: document.getElementById("large").checked ? 1 : 0,
         price: document.getElementById("product-price").value,
-        image: `/uploads/${filename}`,
+        imagePath: `/uploads/${filename}`,
       })
       .then((res) => {
         console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -52,13 +47,10 @@ export const EditApparel = () => {
         },
       });
 
-      const { fileName, filePath } = res.data;
-      setUploadedFile({ fileName, filePath });
-      console.log("File Uploaded");
-
       addData(); //adding data to the database
+      console.log("File Uploaded");
       window.alert("Successfully Added to the database");
-      window.location.reload();
+      //window.location.reload();
     } catch (err) {
       if (err.response.status === 500) {
         console.log("Error with the server");
@@ -73,22 +65,22 @@ export const EditApparel = () => {
   const onChange = (e) => {
     setFile(e.target.files[0]);
     setFilename(e.target.files[0].name);
-    console.log(`Filename:${filename}`);
+    // console.log(`Filename:${filename}`);
   };
-
-  let newData = {};
 
   //updata datas
   useEffect(() => {
+    let id = editId;
     async function fetchData() {
-      const res = await axios.get("http://localhost:3004/apparels");
+      const res = await axios.get(`http://localhost:4600/getApparels`);
       setApparelData(res.data);
-      // console.log(res.data);
+      //console.log(res.data);
       return res;
     }
     fetchData();
   }, [apparelData]);
 
+  let newData = {};
   function handleCheckData() {
     apparelData.map((item) => {
       if (item.id === editId) {
@@ -100,7 +92,7 @@ export const EditApparel = () => {
           size: item.size,
           price: item.price,
         };
-        console.log(newData);
+        //console.log(newData);
       }
     });
   }
@@ -109,7 +101,6 @@ export const EditApparel = () => {
       <div className="apparel-body">
         <div>
           <span className="header">Edit a apparel</span>
-
           <hr />
         </div>
 

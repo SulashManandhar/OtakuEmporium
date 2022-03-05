@@ -1,156 +1,137 @@
 {
-    "adminDetails": {
-        "user": "admin",
-        "password": "admin"
+  "adminDetails": {
+    "user": "admin",
+    "password": "admin"
+  },
+  "countData": {
+    "id": 1,
+    "productCount": 2,
+    "userCount": 3
+  },
+  "apparels": [
+    {
+      "id": "1fa4d138-d646-487d-b730-a4db7b6a694e",
+      "name": "Shirt",
+      "category": "Full-sleeve T-shirt",
+      "description": "This is an red shirt",
+      "color": "Red",
+      "size": [
+        "small",
+        "medium"
+      ],
+      "price": "2500",
+      "image": "/uploads/unnamed.jpg"
     },
-
-    "apperals": [{
-            "productId": 1,
-            "name": "Shirt",
-            "category": "T-shirt",
-            "price": 699,
-            "color": "Black",
-            "size": [
-                "small",
-                "medium",
-                "large"
-            ],
-            "images": {
-                "image01": "path",
-                "image02": "path",
-                "image03": "path"
-            },
-            "description": "This is an despriction"
-        },
-        {
-            "productId": 12,
-            "name": "Hoodie",
-            "category": "Hoodie",
-            "price": 1600,
-            "color": "Grey",
-            "size": [
-                "small",
-                "large"
-            ],
-            "images": {
-                "image01": "path",
-                "image02": "path",
-                "image03": "path"
-            },
-            "description": "This is an despriction"
-        },
-        {
-            "productId": 11,
-            "name": "SweatShirt",
-            "category": "SweatShirt",
-            "price": 700,
-            "color": "Orange",
-            "size": [
-                "small",
-                "medium",
-                "large"
-            ],
-            "images": {
-                "image01": "path",
-                "image02": "path",
-                "image03": "path"
-            },
-            "description": "This is an despriction"
-        },
-        {
-            "productId": 101,
-            "name": "Long sleeve t-shirt",
-            "category": "Long sleeve t-shirt",
-            "price": 1700,
-            "color": "Red",
-            "size": [
-                "medium",
-                "large"
-            ],
-            "images": {
-                "image01": "path",
-                "image02": "path",
-                "image03": "path"
-            },
-            "description": "This is an despriction"
-        }
-    ],
-    "users": [{
-            "id": 1,
-            "fname": "Sulash",
-            "lname": "Manandhar",
-            "email": "suyash.manandhar@yahoo.com",
-            "password": "password",
-            "phoneNO": 9841476797,
-            "address": {
-                "province": 3,
-                "district": "kathmandu",
-                "location": "New Road"
-            }
-        },
-        {
-            "id": 2,
-            "fname": "Sulash",
-            "lname": "Manandhar",
-            "email": "suyash.manandhar@yahoo.com",
-            "password": "password",
-            "phoneNO": 9841476797,
-            "address": {
-                "province": 3,
-                "district": "kathmandu",
-                "location": "New Road"
-            }
-        },
-        {
-            "id": 3,
-            "fname": "Sulash",
-            "lname": "Manandhar",
-            "email": "suyash.manandhar@yahoo.com",
-            "password": "password",
-            "phoneNO": 9841476797,
-            "address": {
-                "province": 3,
-                "district": "kathmandu",
-                "location": "New Road"
-            }
-        }
-    ],
-    "accessories": [{
-            "productId": 1,
-            "name": "Key Chain",
-            "category": "Key Chain",
-            "price": 400,
-            "color": "Black",
-            "description": "This is an despriction"
-        },
-        {
-            "productId": 12,
-            "name": "Wallpaper",
-            "category": "Wallpaper",
-            "price": 500,
-            "color": "Grey",
-            "description": "This is an despriction"
-        },
-        {
-            "productId": 101,
-            "name": "Drinkware",
-            "category": "Drinkware",
-            "price": 5300,
-            "color": "red",
-            "description": "This is an despriction"
-        }
-    ],
-    "banned-users": [{
-            "id": 1,
-            "fname": "Sulash",
-            "lname": "Manandhar",
-            "email": "suyash.manandhar@yahoo.com"
-        },
-        {
-            "id": 2,
-            "fname": "official",
-            "lname": "banned",
-            "email": "official.banned@yahoo.com"
-        }
-    ]
+    {
+      "id": "dfe396b7-cfc2-4dfd-b803-391cfe6099e5",
+      "name": "Hoddie",
+      "category": "Hoodie",
+      "description": "This is an black hoddie",
+      "color": "Black",
+      "size": [
+        "medium"
+      ],
+      "price": "2234",
+      "image": "/uploads/unnamed.jpg"
+    }
+  ],
+  "users": [
+    {
+      "id": "4f01c423-e11f-4dbe-8884-57bdff99cb39",
+      "fname": "Sulash",
+      "lname": "Manandhar",
+      "email": "suyash.manandhar@yahoo.com",
+      "password": "password",
+      "phoneNO": 9841476797,
+      "address": {
+        "province": 3,
+        "district": "kathmandu",
+        "location": "New Road"
+      },
+      "ban": true
+    },
+    {
+      "id": "4ffcc423-e11f-4dbe-1884-57bdff990b39",
+      "fname": "Ervin",
+      "lname": "Howell",
+      "email": "ervin.howell@google.com",
+      "password": "password",
+      "phoneNO": 9841563221,
+      "address": {
+        "province": 3,
+        "district": "kathmandu",
+        "location": "New Road"
+      },
+      "ban": true
+    },
+    {
+      "id": "4ff1c423-e12f-4dbe-8884-57bdff99cb39",
+      "fname": "Clementine",
+      "lname": "Bauch",
+      "email": "bauchclementine1@outlook.com",
+      "password": "password",
+      "phoneNO": 985110632,
+      "address": {
+        "province": 3,
+        "district": "kathmandu",
+        "location": "New Road"
+      },
+      "ban": false
+    }
+  ],
+  "accessories": [
+    {
+      "id": "dfe396b7-cfc2-4dfd-b803-391cfe60j915",
+      "name": "Phoniex KeyChain",
+      "category": "Keychain",
+      "price": "4001",
+      "color": "Black",
+      "description": "This is an despriction",
+      "image": "/uploads/unnamed.jpg"
+    },
+    {
+      "id": "4ffcc423-e11f-4dbe-8884-57bdff99cb39",
+      "name": "Black Cover Action Figure",
+      "category": "ActionFigure",
+      "description": "Black Clover Asta actioni figure",
+      "color": "Black",
+      "price": "1234",
+      "image": "/uploads/unnamed.jpg"
+    },
+    {
+      "id": "4ffcc423-e1cf-4ibe-8884-57bdff99cb39",
+      "name": "One Piece Masks",
+      "category": "Masks",
+      "description": "One Piece Anime Masks",
+      "color": "Red",
+      "price": "250",
+      "image": "/uploads/unnamed.jpg"
+    }
+  ],
+  "drinkware": [
+    {
+      "id": "c84367bd-2663-4735-869f-bc3773d54546",
+      "name": "Normal plain ceramic mug",
+      "description": "A plain white ceramic mug.",
+      "color": "White",
+      "price": "1264",
+      "image": "/uploads/randomPic.jpg"
+    },
+    {
+      "id": "e84167bd-2663-4735-869f-bc3773d54546",
+      "name": "Attack On Titan ceramic mug",
+      "description": "Attack On Titan ceramic mug.",
+      "color": "Green",
+      "price": "1564",
+      "image": "/uploads/randomPic.jpg"
+    },
+    {
+      "id": "l84317bd-2663-4735-869f-bc3773d54546",
+      "name": "Normal plain ceramic mug",
+      "description": "A plain black ceramic mug.",
+      "color": "black",
+      "price": "1264",
+      "image": "/uploads/randomPic.jpg"
+    }
+  ]
 }
