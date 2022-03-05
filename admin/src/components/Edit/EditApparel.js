@@ -1,21 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+
 import axios from "axios";
 import "../../stylesheets/apparel.css";
 import "../../stylesheets/bootstrap.min.css";
 
-export const EditApparel = () => {
+export const EditApparel = (props) => {
   //props sent from Apparel
-  const location = useLocation();
-  const { editId } = location.state; //id of selected user
-
+  const [editId, setEditId] = useState(0);
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("Choose File");
   const [apparelData, setApparelData] = useState([]);
 
+  useEffect(() => {
+    setEditId(props.location.hash.slice(1));
+    console.log(props.location.hash.slice(1));
+  }, [props]);
+
+  //updata datas
+  useEffect(() => {
+    if (editId) {
+      axios
+        .get(`http://localhost:4600/apparels/getApparels/${editId}`)
+        .then((res) => {
+          setApparelData(res.data[0]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [editId]);
+
   const addData = () => {
     axios
-      .put("http://localhost:4600/editApparels", {
+      .put("http://localhost:4600/apparels/editApparels", {
         id: editId,
         name: document.getElementById("product-name").value,
         category: document.getElementById("product-category").value,
@@ -68,34 +85,6 @@ export const EditApparel = () => {
     // console.log(`Filename:${filename}`);
   };
 
-  //updata datas
-  useEffect(() => {
-    let id = editId;
-    async function fetchData() {
-      const res = await axios.get(`http://localhost:4600/getApparels`);
-      setApparelData(res.data);
-      //console.log(res.data);
-      return res;
-    }
-    fetchData();
-  }, [apparelData]);
-
-  let newData = {};
-  function handleCheckData() {
-    apparelData.map((item) => {
-      if (item.id === editId) {
-        newData = {
-          name: item.name,
-          category: item.category,
-          description: item.description,
-          color: item.color,
-          size: item.size,
-          price: item.price,
-        };
-        //console.log(newData);
-      }
-    });
-  }
   return (
     <>
       <div className="apparel-body">
@@ -104,7 +93,7 @@ export const EditApparel = () => {
           <hr />
         </div>
 
-        <form onSubmit={onSubmit} onLoad={handleCheckData()} className="form">
+        <form onSubmit={onSubmit} className="form">
           {/* Product Name */}
           <div className="mb-3">
             <label htmlFor="ProductName" className="form-label">
@@ -115,7 +104,7 @@ export const EditApparel = () => {
               className="form-control"
               id="product-name"
               aria-describedby="Name of Product"
-              defaultValue={newData.name}
+              defaultValue={apparelData.name}
             />
           </div>
 
@@ -130,8 +119,8 @@ export const EditApparel = () => {
               aria-label="Category selection"
               required
             >
-              <option defaultValue={newData.category}>
-                {newData.category}
+              <option defaultValue={apparelData.category}>
+                {apparelData.category}
               </option>
               <option value="SweatShirt">SweatShirt</option>
               <option value="Hoodie">Hoodie</option>
@@ -151,7 +140,7 @@ export const EditApparel = () => {
               id="product-color"
               autoComplete="off"
               aria-describedby="Available Color of Product"
-              defaultValue={newData.color}
+              defaultValue={apparelData.color}
             />
           </div>
 
@@ -166,7 +155,7 @@ export const EditApparel = () => {
               id="product-price"
               autoComplete="off"
               aria-describedby="Price of Product"
-              defaultValue={newData.price}
+              defaultValue={apparelData.price}
             />
           </div>
 
@@ -236,7 +225,7 @@ export const EditApparel = () => {
               className="form-control"
               id="product-description"
               aria-describedby="Description of Product"
-              defaultValue={newData.description}
+              defaultValue={apparelData.description}
             />
           </div>
 

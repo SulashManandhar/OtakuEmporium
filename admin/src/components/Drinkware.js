@@ -21,7 +21,7 @@ export default class Drinkware extends Component {
 
   getDrinkware = () => {
     axios
-      .get("http://localhost:4600/getDrinkware")
+      .get("http://localhost:4600/drinkware/getDrinkware")
       .then((res) => {
         this.setState({
           data: res.data,
@@ -46,7 +46,7 @@ export default class Drinkware extends Component {
     );
     if (confimation) {
       axios
-        .delete("http://localhost:4600/deleteDrinkware/" + itemId)
+        .delete("http://localhost:4600/drinkware/deleteDrinkware/" + itemId)
         .then((res) => {
           console.log(res);
           console.log("Successfully deleted data.");
@@ -122,23 +122,10 @@ export default class Drinkware extends Component {
                       className="btn btn-warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        this.setState({
-                          referenceValue: item.id,
-                        });
-                        console.log("Edit:" + item.id);
+                        this.props.history.push(`/editDrinkware#${item.id}`);
                       }}
                     >
-                      <Link
-                        className="link"
-                        to={{
-                          pathname: "/editDrinkware",
-                          state: {
-                            editId: this.state.referenceValue,
-                          },
-                        }}
-                      >
-                        Edit <AiOutlineEdit />
-                      </Link>
+                      Edit <AiOutlineEdit />
                     </button>
                   </td>
                 </tr>

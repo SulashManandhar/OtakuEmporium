@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "../../stylesheets/apparel.css";
 import "../../stylesheets/bootstrap.min.css";
@@ -8,7 +7,7 @@ export const EditAccessories = (props) => {
   const [editId, setEditId] = useState(0);
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("Choose File");
-  const [apparelData, setApparelData] = useState([]);
+  const [accessoriesData, setAccessoriesData] = useState([]);
 
   useEffect(() => {
     setEditId(props.location.hash.slice(1));
@@ -19,10 +18,9 @@ export const EditAccessories = (props) => {
   useEffect(() => {
     if (editId) {
       axios
-        .get(`http://localhost:4600/getAccessories/${editId}`)
+        .get(`http://localhost:4600/accessories/getAccessories/${editId}`)
         .then((res) => {
-          setApparelData(res.data[0]);
-          console.log(res.data);
+          setAccessoriesData(res.data[0]);
         })
         .catch((err) => {
           console.log(err);
@@ -32,7 +30,7 @@ export const EditAccessories = (props) => {
 
   const addData = () => {
     axios
-      .put("http://localhost:4600/editAccessories", {
+      .put("http://localhost:4600/accessories/editAccessories", {
         id: editId,
         name: document.getElementById("product-name").value,
         category: document.getElementById("product-category").value,
@@ -102,7 +100,7 @@ export const EditAccessories = (props) => {
               className="form-control"
               id="product-name"
               aria-describedby="Name of Product"
-              defaultValue={apparelData.name}
+              defaultValue={accessoriesData.name}
             />
           </div>
 
@@ -117,8 +115,8 @@ export const EditAccessories = (props) => {
               aria-label="Category selection"
               required
             >
-              <option defaultValue={apparelData.category}>
-                {apparelData.category}
+              <option defaultValue={accessoriesData.category}>
+                {accessoriesData.category}
               </option>
               <option value="Masks">Masks</option>
               <option value="Keychain">Keychain</option>
@@ -138,7 +136,7 @@ export const EditAccessories = (props) => {
               id="product-color"
               autoComplete="off"
               aria-describedby="Available Color of Product"
-              defaultValue={apparelData.color}
+              defaultValue={accessoriesData.color}
             />
           </div>
 
@@ -153,7 +151,7 @@ export const EditAccessories = (props) => {
               id="product-price"
               autoComplete="off"
               aria-describedby="Price of Product"
-              defaultValue={apparelData.price}
+              defaultValue={accessoriesData.price}
             />
           </div>
 
@@ -167,7 +165,7 @@ export const EditAccessories = (props) => {
               className="form-control"
               id="product-description"
               aria-describedby="Description of Product"
-              defaultValue={apparelData.description}
+              defaultValue={accessoriesData.description}
             />
           </div>
 

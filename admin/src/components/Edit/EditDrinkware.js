@@ -1,21 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "../../stylesheets/apparel.css";
 import "../../stylesheets/bootstrap.min.css";
 
-export const EditDrinkware = () => {
-  //props
-  const location = useLocation();
-  const { editId } = location.state;
-
+export const EditDrinkware = (props) => {
+  const [editId, setEditId] = useState(0);
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("Choose File");
-  const [apparelData, setApparelData] = useState([]);
+  const [drinkwareData, setDrinkwareData] = useState([]);
+
+  useEffect(() => {
+    setEditId(props.location.hash.slice(1));
+    console.log(props.location.hash.slice(1));
+  }, [props]);
+
+  //updata datas
+  useEffect(() => {
+    if (editId) {
+      axios
+        .get(`http://localhost:4600/drinkware/getDrinkware/${editId}`)
+        .then((res) => {
+          setDrinkwareData(res.data[0]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [editId]);
 
   const addData = () => {
     axios
-      .put("http://localhost:4600/updateDrinkware/", {
+      .put("http://localhost:4600/drinkware/updateDrinkware/", {
         id: editId,
         name: document.getElementById("product-name").value,
         description: document.getElementById("product-description").value,
@@ -64,33 +79,6 @@ export const EditDrinkware = () => {
     console.log(`Filename:${filename}`);
   };
 
-  let newData = {};
-
-  //updata datas
-  useEffect(() => {
-    async function fetchData() {
-      const res = await axios.get("http://localhost:4600/getDrinkware");
-      setApparelData(res.data);
-      // console.log(res.data);
-      return res;
-    }
-    fetchData();
-  }, [apparelData]);
-
-  function handleCheckData() {
-    apparelData.map((item) => {
-      if (item.id === editId) {
-        newData = {
-          name: item.name,
-          category: item.category,
-          description: item.description,
-          color: item.color,
-          price: item.price,
-        };
-        // console.log(newData);
-      }
-    });
-  }
   return (
     <>
       <div className="apparel-body">
@@ -100,7 +88,7 @@ export const EditDrinkware = () => {
           <hr />
         </div>
 
-        <form onSubmit={onSubmit} onLoad={handleCheckData()} className="form">
+        <form onSubmit={onSubmit} className="form">
           {/* Product Name */}
           <div className="mb-3">
             <label htmlFor="ProductName" className="form-label">
@@ -111,7 +99,7 @@ export const EditDrinkware = () => {
               className="form-control"
               id="product-name"
               aria-describedby="Name of Product"
-              defaultValue={newData.name}
+              defaultValue={drinkwareData.name}
             />
           </div>
 
@@ -126,7 +114,7 @@ export const EditDrinkware = () => {
               id="product-color"
               autoComplete="off"
               aria-describedby="Available Color of Product"
-              defaultValue={newData.color}
+              defaultValue={drinkwareData.color}
             />
           </div>
 
@@ -141,7 +129,7 @@ export const EditDrinkware = () => {
               id="product-price"
               autoComplete="off"
               aria-describedby="Price of Product"
-              defaultValue={newData.price}
+              defaultValue={drinkwareData.price}
             />
           </div>
 
@@ -155,7 +143,7 @@ export const EditDrinkware = () => {
               className="form-control"
               id="product-description"
               aria-describedby="Description of Product"
-              defaultValue={newData.description}
+              defaultValue={drinkwareData.description}
             />
           </div>
 

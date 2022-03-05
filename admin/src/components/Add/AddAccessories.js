@@ -17,7 +17,7 @@ export const AddAccessories = () => {
   //adds information to the json (name of product, description, image path, size color)
   const addData = () => {
     axios
-      .post("http://localhost:4600/addAccessoires", {
+      .post("http://localhost:4600/accessories/addAccessoires", {
         name: document.getElementById("product-name").value,
         category: document.getElementById("product-category").value,
         description: document.getElementById("product-description").value,

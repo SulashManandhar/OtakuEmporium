@@ -21,7 +21,7 @@ export default class Apparels extends Component {
 
   getApparels = () => {
     axios
-      .get("http://localhost:4600/getApparels")
+      .get("http://localhost:4600/apparels/getApparels")
       .then((res) => {
         this.setState({
           data: res.data,
@@ -46,7 +46,7 @@ export default class Apparels extends Component {
     );
     if (confimation) {
       axios
-        .delete("http://localhost:4600/deleteApparels/" + itemId)
+        .delete("http://localhost:4600/apparels/deleteApparels/" + itemId)
         .then((res) => {
           // console.log(res);
           console.log("Successfully deleted data.");
@@ -123,23 +123,10 @@ export default class Apparels extends Component {
                       className="btn btn-warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        this.setState({
-                          referenceValue: item.id,
-                        });
-                        console.log("Edit:" + item.id);
+                        this.props.history.push(`/editApparels#${item.id}`);
                       }}
                     >
-                      <Link
-                        className="link"
-                        to={{
-                          pathname: "/editApparels",
-                          state: {
-                            editId: this.state.referenceValue,
-                          },
-                        }}
-                      >
-                        Edit <AiOutlineEdit />
-                      </Link>
+                      Edit <AiOutlineEdit />
                     </button>
                   </td>
                 </tr>

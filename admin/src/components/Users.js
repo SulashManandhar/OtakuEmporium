@@ -16,7 +16,7 @@ export default class Users extends Component {
 
   getUsers = () => {
     axios
-      .get("http://localhost:4600/getUsers")
+      .get("http://localhost:4600/users/getUsers")
       .then((res) => {
         this.setState({
           data: res.data,
@@ -40,7 +40,7 @@ export default class Users extends Component {
     let isBan = userToBeModified[0].ban === 0 ? 1 : 0;
     //console.log(isBan);
     axios
-      .put("http://localhost:4600/banUser", {
+      .put("http://localhost:4600/users/banUser", {
         userId: itemId,
         banValue: isBan,
       })
@@ -62,7 +62,7 @@ export default class Users extends Component {
     );
     if (confimation) {
       axios
-        .delete("http://localhost:4600/deleteUser/" + itemId)
+        .delete("http://localhost:4600/users/deleteUser/" + itemId)
         .then((res) => {
           // this.getUsers();
           console.log(res);
