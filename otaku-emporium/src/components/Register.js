@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../stylesheet/register.css";
 
 export const Register = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
 
   const getData = () => {
     setData({

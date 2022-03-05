@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+var classNames = require("classnames");
 
 export const HeroSlide = () => {
   const [data, setData] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [carouselItems, setCarouselItems] = useState([]);
 
   useEffect(() => {
@@ -10,7 +12,7 @@ export const HeroSlide = () => {
       .get("http://localhost:4600/getSlider")
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
+        // console.log(res.data);
       })
       .catch((error) => {
         console.log("Error!!!");
@@ -20,13 +22,25 @@ export const HeroSlide = () => {
   useEffect(() => {
     if (data.length) {
       let carouselItems = [];
-      data.foreach((item) => {
-        carouselItems.push(
-          <div className="carousel-item active">
-            <img src={item.imagePath} className="d-block w-100" alt="..." />
+
+      carouselItems = data.map(function (item, index) {
+        return (
+          <div
+            className={classNames({
+              active: index === activeIndex,
+              "carousel-item": true,
+            })}
+            key={item.id}
+          >
+            <img
+              src={item.imagePath}
+              className="d-block w-100"
+              alt={item.title}
+            />
           </div>
         );
       });
+
       setCarouselItems(carouselItems);
     }
   }, [data]);
@@ -41,6 +55,7 @@ export const HeroSlide = () => {
         <div className="carousel-inner">
           {/* //something  */}
           {carouselItems}
+
           {/* something ending  */}
 
           {/* <div className="carousel-item active">
@@ -82,6 +97,7 @@ export const HeroSlide = () => {
           type="button"
           data-bs-target="#carouselExampleControls"
           data-bs-slide="next"
+          // onClick={setActiveIndex(activeIndex + 1)}
         >
           <span
             className="carousel-control-next-icon"

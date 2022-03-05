@@ -26,7 +26,6 @@ class Header extends Component {
         this.setState({
           data: res.data,
         });
-        console.log(res.data);
       })
       .catch((error) => {
         console.log("Error!!!");
