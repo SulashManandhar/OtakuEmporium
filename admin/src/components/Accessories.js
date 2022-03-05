@@ -121,13 +121,13 @@ export default class Accessories extends Component {
                       className="btn btn-warning"
                       onClick={(e) => {
                         e.preventDefault();
-                        this.setState({
-                          referenceValue: item.id,
-                        });
-                        console.log("Edit:" + item.id);
+                        // this.setState({
+                        //   referenceValue: item.id,
+                        // });
+                        this.props.history.push(`/editAccessories#${item.id}`);
                       }}
                     >
-                      <Link
+                      {/* <Link
                         className="link"
                         to={{
                           pathname: "/editAccessories",
@@ -135,9 +135,9 @@ export default class Accessories extends Component {
                             editId: this.state.referenceValue,
                           },
                         }}
-                      >
-                        Edit <AiOutlineEdit />
-                      </Link>
+                      > */}
+                      Edit <AiOutlineEdit />
+                      {/* </Link> */}
                     </button>
                   </td>
                 </tr>

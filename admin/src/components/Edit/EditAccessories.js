@@ -4,14 +4,31 @@ import axios from "axios";
 import "../../stylesheets/apparel.css";
 import "../../stylesheets/bootstrap.min.css";
 
-export const EditAccessories = () => {
-  //props
-  const location = useLocation();
-  const { editId } = location.state;
-
+export const EditAccessories = (props) => {
+  const [editId, setEditId] = useState(0);
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("Choose File");
   const [apparelData, setApparelData] = useState([]);
+
+  useEffect(() => {
+    setEditId(props.location.hash.slice(1));
+    console.log(props.location.hash.slice(1));
+  }, [props]);
+
+  //updata datas
+  useEffect(() => {
+    if (editId) {
+      axios
+        .get(`http://localhost:4600/getAccessories/${editId}`)
+        .then((res) => {
+          setApparelData(res.data[0]);
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [editId]);
 
   const addData = () => {
     axios
@@ -65,32 +82,6 @@ export const EditAccessories = () => {
     setFilename(e.target.files[0].name);
   };
 
-  let newData = {};
-
-  //updata datas
-  useEffect(() => {
-    async function fetchData() {
-      const res = await axios.get("http://localhost:4600/getAccessories");
-      setApparelData(res.data);
-      return res;
-    }
-    fetchData();
-  }, [apparelData]);
-
-  function handleCheckData() {
-    apparelData.map((item) => {
-      if (item.id === editId) {
-        newData = {
-          name: item.name,
-          category: item.category,
-          description: item.description,
-          color: item.color,
-          price: item.price,
-        };
-        // console.log(newData);
-      }
-    });
-  }
   return (
     <>
       <div className="apparel-body">
@@ -100,7 +91,7 @@ export const EditAccessories = () => {
           <hr />
         </div>
 
-        <form onSubmit={onSubmit} onLoad={handleCheckData()} className="form">
+        <form onSubmit={onSubmit} className="form">
           {/* Product Name */}
           <div className="mb-3">
             <label htmlFor="ProductName" className="form-label">
@@ -111,7 +102,7 @@ export const EditAccessories = () => {
               className="form-control"
               id="product-name"
               aria-describedby="Name of Product"
-              defaultValue={newData.name}
+              defaultValue={apparelData.name}
             />
           </div>
 
@@ -126,8 +117,8 @@ export const EditAccessories = () => {
               aria-label="Category selection"
               required
             >
-              <option defaultValue={newData.category}>
-                {newData.category}
+              <option defaultValue={apparelData.category}>
+                {apparelData.category}
               </option>
               <option value="Masks">Masks</option>
               <option value="Keychain">Keychain</option>
@@ -147,7 +138,7 @@ export const EditAccessories = () => {
               id="product-color"
               autoComplete="off"
               aria-describedby="Available Color of Product"
-              defaultValue={newData.color}
+              defaultValue={apparelData.color}
             />
           </div>
 
@@ -162,7 +153,7 @@ export const EditAccessories = () => {
               id="product-price"
               autoComplete="off"
               aria-describedby="Price of Product"
-              defaultValue={newData.price}
+              defaultValue={apparelData.price}
             />
           </div>
 
@@ -176,7 +167,7 @@ export const EditAccessories = () => {
               className="form-control"
               id="product-description"
               aria-describedby="Description of Product"
-              defaultValue={newData.description}
+              defaultValue={apparelData.description}
             />
           </div>
 
