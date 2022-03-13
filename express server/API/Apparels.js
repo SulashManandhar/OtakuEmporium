@@ -136,4 +136,22 @@ router.delete("/deleteApparels/:apparelId", (req, res) => {
     res.send(result);
   });
 });
+
+router.put("/updateFeature", (req, res) => {
+  const id = req.body.id;
+  const is_featured = req.body.is_featured;
+  const changeFeature = `Update apparels SET is_featured = ? WHERE id = ?;`;
+  db.query(changeFeature, [is_featured, id], (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send(err);
+    }
+    if (id === null && is_featured === null) {
+      console.log("Id is null");
+      return res.status(500).send("Null value");
+    }
+    res.send(result);
+  });
+});
+
 module.exports = router;

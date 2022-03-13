@@ -9,9 +9,7 @@ function LogIn({ Login, error }) {
     e.preventDefault();
     Login(details);
   };
-  const body = {
-    marginLeft: "400px",
-  };
+
   return (
     <div className={`${style.login}`}>
       <form onSubmit={submitHandler}>

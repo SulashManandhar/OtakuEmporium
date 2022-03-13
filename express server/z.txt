@@ -52,7 +52,8 @@ CREATE TABLE Apparels(
     medium_size int not null,
     large_size int not null,
     price int not null,
-    imagePath varchar(160) not null
+    imagePath varchar(160) not null,
+    is_featured int default 0
 );
 
 INSERT INTO apparels (
@@ -246,8 +247,8 @@ INSERT INTO slide_show(
     "/images/slide5.jpg"
 );
 
-CREATE TABLE nav_links(
-    id int not null primary key auto_increment,
+CREATE TABLE nav_links(id int not null primary key auto_increment,
+    
     tab_name varchar(12) not null,
     tab_link varchar(12) not null
 );
@@ -266,3 +267,5 @@ INSERT INTO nav_links(
     tab_link
 ) VALUE 
 (?, ?);
+
+

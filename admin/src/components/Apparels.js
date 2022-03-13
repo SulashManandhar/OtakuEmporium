@@ -5,6 +5,7 @@ import {
   AiOutlinePlusCircle,
   AiOutlineMinusCircle,
   AiOutlineEdit,
+  AiFillCheckCircle,
 } from "react-icons/ai";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -48,7 +49,7 @@ export default class Apparels extends Component {
       axios
         .delete("http://localhost:4600/apparels/deleteApparels/" + itemId)
         .then((res) => {
-          // console.log(res);
+          console.log(res);
           console.log("Successfully deleted data.");
           alert("Successfully delete the data");
         })
@@ -61,6 +62,24 @@ export default class Apparels extends Component {
     }
   };
 
+  handleIsFeatured = (itemId) => {
+    let userToBeModified = this.state.data.filter((item) => item.id === itemId);
+    let changeFeature = userToBeModified[0].is_featured === 0 ? 1 : 0;
+
+    axios
+      .put("http://localhost:4600/apparels/updateFeature", {
+        id: itemId,
+        is_featured: changeFeature,
+      })
+      .then((res) => {
+        this.getApparels();
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(itemId);
+  };
   render() {
     return (
       <>
@@ -90,6 +109,9 @@ export default class Apparels extends Component {
                 <th>Product Name</th>
                 <th>Price</th>
                 <th>Color</th>
+                <th>Featured</th>
+                <th></th>
+                <th></th>
                 <th></th>
               </tr>
             </thead>
@@ -101,7 +123,21 @@ export default class Apparels extends Component {
                   <td>{item.name}</td>
                   <td>{item.price}</td>
                   <td>{item.color}</td>
+                  <td>{item.is_featured === 1 ? "Yes" : "No"}</td>
 
+                  {/* Featured button */}
+                  <td>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        this.handleIsFeatured(item.id);
+                      }}
+                    >
+                      Feature <AiFillCheckCircle />
+                    </button>
+                  </td>
                   {/* Delete button  */}
                   <td>
                     <button

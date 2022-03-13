@@ -5,10 +5,12 @@ var cors = require("cors");
 const mysql2 = require("mysql2");
 const bodyParser = require("body-parser");
 
+//API
 const accessories = require("./API/Accessories");
 const users = require("./API/User");
 const apparels = require("./API/Apparels");
 const drinkware = require("./API/Drinkware");
+const { query } = require("./DB");
 
 const app = express();
 
@@ -25,6 +27,8 @@ app.use(fileUpload());
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//Routes
 app.use("/accessories", accessories);
 app.use("/users", users);
 app.use("/apparels", apparels);
@@ -76,6 +80,7 @@ app.delete("/deleteSlider/:slideId", (req, res) => {
     res.send(result);
   });
 });
+
 app.post("/addSlider", (req, res) => {
   const title = req.body.title;
   const imagePath = req.body.imagePath;

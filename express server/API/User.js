@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../DB");
+const bodyParser = require("body-parser");
 
 //Users
 //fetch user data
@@ -42,6 +43,52 @@ router.delete("/deleteUser/:userId", (req, res) => {
     }
     res.send(result);
   });
+});
+
+router.post("/addUser", (req, res) => {
+  let errors = [];
+  const {
+    fname,
+    lname,
+    email,
+    password,
+    RePassword,
+    phone,
+    district,
+    location,
+    province,
+  } = req.body;
+
+  //check phone number length
+  if (phone.length <= 9) {
+    errors.push({ msg: "Enter a valid phone number" });
+  }
+
+  //check if passwords match.
+  if (password !== RePassword) {
+    errors.push({ msg: "Passwords do not match." });
+  }
+
+  //check password length
+  if (password.length < 8) {
+    errors.push({ msg: "Passwords should be at least 8 characters." });
+  }
+  if (errors.length > 0) {
+    res.send({
+      errors,
+      fname,
+      lname,
+      email,
+      password,
+      RePassword,
+      phone,
+      district,
+      location,
+      province,
+    });
+  } else {
+    res.send("pass");
+  }
 });
 
 module.exports = router;
