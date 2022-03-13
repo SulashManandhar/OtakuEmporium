@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { LogIn } from "../components/LogIn";
 import Register from "../components/Register";
 import "../stylesheet/register.css";
 
@@ -7,7 +8,8 @@ export default class Profile extends Component {
     return (
       <>
         <div className="register-container">
-          <Register />
+          {/* <Register /> */}
+          <LogIn />
         </div>
       </>
     );

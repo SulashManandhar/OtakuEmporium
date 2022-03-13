@@ -1,6 +1,7 @@
 .register-container {
     padding: 5px;
-    margin: 10px;
+    margin-left: 10px;
+    max-width: 95%;
 }
 
 input::-webkit-outer-spin-button,

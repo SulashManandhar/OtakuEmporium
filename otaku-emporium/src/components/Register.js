@@ -1,41 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../stylesheet/register.css";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 export const Register = () => {
   const [data, setData] = useState([]);
 
-  const getData = () => {
-    setData({
-      fname: document.getElementById("fname").value,
-      lanme: document.getElementById("lname").value,
-      email: document.getElementById("email").value,
-      password: document.getElementById("password").value,
-      RePassword: document.getElementById("re-password").value,
-      phone: document.getElementById("phone-num").value,
-      district: document.getElementById("district").value,
-      location: document.getElementById("location").value,
-      province: document.getElementById("province").value,
-    });
-  };
-  const checkValidation = (e) => {
+  useEffect(() => {}, [data]);
+  const submit = (e) => {
     e.preventDefault();
-    getData();
-    console.log(data);
+    axios
+      .post("http://localhost:4600/users/addUser", {
+        fname: document.getElementById("fname").value,
+        lanme: document.getElementById("lname").value,
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value,
+        RePassword: document.getElementById("re-password").value,
+        phone: document.getElementById("phone-num").value,
+        district: document.getElementById("district").value,
+        location: document.getElementById("location").value,
+        province: document.getElementById("province").value,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data !== "pass") {
+          setData(res.data.errors);
+          console.log("_______________________");
+          console.log(data);
+        } else {
+          window.alert("User has been created...");
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <>
-      <div>
+      <div className="mt-3">
         <h2>Register Now!!!</h2>
         <hr />
       </div>
       <br />
-      <form
-        className="row g-3 needs-validation"
-        noValidate
-        onSubmit={checkValidation}
-      >
+
+      {data.map((item) => {
+        <div
+          className="alert alert-warning alert-dismissible fade show"
+          role="alert"
+        >
+          {/* messages */}
+          <span>{item.msg}</span>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>;
+      })}
+
+      <form className="row g-3 needs-validation" noValidate onSubmit={submit}>
         {/* First Name  */}
-        <div className="col-md-4">
+        <div className="col-md-3">
           <label htmlFor="validationCustom01" className="form-label">
             First name
           </label>
@@ -50,7 +77,7 @@ export const Register = () => {
         </div>
 
         {/* Last Name  */}
-        <div className="col-md-4">
+        <div className="col-md-3">
           <label htmlFor="validationCustom02" className="form-label">
             Last name
           </label>
@@ -86,7 +113,7 @@ export const Register = () => {
         </div>
 
         {/* Password  */}
-        <div className="col-md-4">
+        <div className="col-md-3">
           <label htmlFor="validationCustom02" className="form-label">
             Password:
           </label>
@@ -101,7 +128,7 @@ export const Register = () => {
         </div>
 
         {/* Re-enter your password  */}
-        <div className="col-md-4">
+        <div className="col-md-3">
           <label htmlFor="validationCustom02" className="form-label">
             Confirm Password:
           </label>
@@ -131,10 +158,11 @@ export const Register = () => {
         </div>
 
         {/* District  */}
-        <div className="col-md-4">
+        <div className="col-md-3">
           <label htmlFor="validationCustom04" className="form-label">
             District
           </label>
+
           <select className="form-select" id="district" required>
             <option value="Kathmandu">Kathmandu</option>
 
@@ -237,7 +265,7 @@ export const Register = () => {
         </div>
 
         {/* Location  */}
-        <div className="col-md-5">
+        <div className="col-md-4">
           <label htmlFor="validationCustom03" className="form-label">
             Location
           </label>
@@ -271,12 +299,18 @@ export const Register = () => {
         </div>
 
         {/* Submit button  */}
-        <div className="col-12">
+        <div className="col-12 mb-2">
           <button className="btn btn-primary" type="submit">
             Submit form
           </button>
         </div>
       </form>
+
+      <div className="mb-1">
+        <span className="fs-6">
+          Have a account? <Link to="/login">Log in</Link>
+        </span>
+      </div>
     </>
   );
 };

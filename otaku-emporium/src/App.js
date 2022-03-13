@@ -9,6 +9,8 @@ import Footer from "./components/Footer";
 import WishList from "./pages/WishList";
 import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
+import Register from "./components/Register";
+import LogIn from "./components/LogIn";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/accessories" component={Accessories}></Route>
           <Route path="/drinkware" component={Drinkware}></Route>
           <Route path="/profile" component={Profile}></Route>
+          <Route path="/register" component={Register}></Route>
+          <Route path="/login" component={LogIn}></Route>
           <Route path="/cart" component={Cart}></Route>
           <Route path="/wishList" component={WishList}></Route>
         </Switch>
