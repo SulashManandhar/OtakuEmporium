@@ -4,13 +4,14 @@ const fileUpload = require("express-fileupload");
 var cors = require("cors");
 const mysql2 = require("mysql2");
 const bodyParser = require("body-parser");
+const session = require("express-session");
 
 //API
 const accessories = require("./API/Accessories");
 const users = require("./API/User");
 const apparels = require("./API/Apparels");
 const drinkware = require("./API/Drinkware");
-const { query } = require("./DB");
+const passport = require("passport");
 
 const app = express();
 
@@ -22,11 +23,27 @@ const db = mysql2.createPool({
   database: "otaku_db",
 });
 
+//passport congif
+require("./API/Passport")(passport);
+
 //app use
 app.use(fileUpload());
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Express session
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Routes
 app.use("/accessories", accessories);
@@ -41,6 +58,8 @@ const display = `
     <span>Server is started...</span>
 `;
 app.get("/", (req, res) => res.send(display));
+app.get("/success", (req, res) => res.send(true));
+app.get("/fail", (req, res) => res.send(false));
 
 //UPLOAD ENDPOINT
 app.post("/uploads", cors(), (req, res) => {

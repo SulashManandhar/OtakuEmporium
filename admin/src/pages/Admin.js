@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import classNames from "classnames";
+
+//react-icons
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { BiArrowFromTop, BiLogOut } from "react-icons/bi";
 import { DiReact } from "react-icons/di";
@@ -8,15 +12,17 @@ import { GrMenu } from "react-icons/gr";
 import { IoLinkSharp } from "react-icons/io5";
 import { AiOutlineSetting } from "react-icons/ai";
 import { MdOutlineSlideshow } from "react-icons/md";
+
+//stylesheet
+import "../stylesheets/header.css";
+
+//components and pages
 import Dashboard from "../components/Dashboard";
 import Setting from "../components/Setting";
 import Users from "../components/Users";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import "../stylesheets/header.css";
 import Apparels from "../components/Apparels";
 import Accessories from "../components/Accessories";
 import AddApparel from "../components/Add/AddApparel";
-import classNames from "classnames";
 import { EditApparel } from "../components/Edit/EditApparel";
 import { AddAccessories } from "../components/Add/AddAccessories";
 import { EditAccessories } from "../components/Edit/EditAccessories";
