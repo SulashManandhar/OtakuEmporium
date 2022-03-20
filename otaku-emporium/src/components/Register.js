@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 export const Register = () => {
-  const [data, setData] = useState([]);
+  const [errors, setErrors] = useState([]);
 
-  useEffect(() => {}, [data]);
+  useEffect(() => {}, [errors]);
   const submit = (e) => {
     e.preventDefault();
     axios
       .post("http://localhost:4600/users/addUser", {
         fname: document.getElementById("fname").value,
-        lanme: document.getElementById("lname").value,
+        lname: document.getElementById("lname").value,
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
         RePassword: document.getElementById("re-password").value,
@@ -23,12 +23,15 @@ export const Register = () => {
       })
       .then((res) => {
         console.log(res);
-        if (res.data !== "pass") {
-          setData(res.data.errors);
-          console.log("_______________________");
-          console.log(data);
+        if (res.data !== true) {
+          setErrors(res.data);
+
+          // console.log(errors);
         } else {
-          window.alert("User has been created...");
+          const message =
+            "User account is now registered..." + <br /> + "Now you can login ";
+          window.alert(message);
+
           window.location.reload();
         }
       })
@@ -44,21 +47,12 @@ export const Register = () => {
       </div>
       <br />
 
-      {data.map((item) => {
-        <div
-          className="alert alert-warning alert-dismissible fade show"
-          role="alert"
-        >
-          {/* messages */}
-          <span>{item.msg}</span>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>;
-      })}
+      {/* display errors */}
+      <div className="errors">
+        {errors.forEach((item) => {
+          <span>{item.msg}</span>;
+        })}
+      </div>
 
       <form className="row g-3 needs-validation" noValidate onSubmit={submit}>
         {/* First Name  */}
@@ -73,7 +67,6 @@ export const Register = () => {
             placeholder="Happy"
             required
           />
-          <div className="valid-feedback">Looks good!</div>
         </div>
 
         {/* Last Name  */}
@@ -88,7 +81,6 @@ export const Register = () => {
             placeholder="Smith"
             required
           />
-          <div className="valid-feedback">Looks good!</div>
         </div>
 
         {/* Email Address  */}
@@ -108,7 +100,6 @@ export const Register = () => {
               placeholder="offical.otakuemporium@gmail.com"
               required
             />
-            <div className="invalid-feedback">Please choose a username.</div>
           </div>
         </div>
 
@@ -124,7 +115,6 @@ export const Register = () => {
             placeholder="*******"
             required
           />
-          <div className="valid-feedback">Looks good!</div>
         </div>
 
         {/* Re-enter your password  */}
@@ -139,7 +129,6 @@ export const Register = () => {
             placeholder="*******"
             required
           />
-          <div className="valid-feedback">Looks good!</div>
         </div>
 
         {/* Phone Number */}
@@ -153,8 +142,8 @@ export const Register = () => {
             id="phone-num"
             placeholder="98********"
             required
+            autoComplete="true"
           />
-          <div className="valid-feedback">Looks good!</div>
         </div>
 
         {/* District  */}
@@ -259,9 +248,6 @@ export const Register = () => {
             <option value="Baitadi">Baitadi</option>
             <option value="Darchula">Darchula</option>
           </select>
-          <div className="invalid-feedback">
-            Please select a valid district.
-          </div>
         </div>
 
         {/* Location  */}
@@ -276,9 +262,6 @@ export const Register = () => {
             placeholder="Location around your area"
             required
           />
-          <div className="invalid-feedback">
-            Please provide a valid location.
-          </div>
         </div>
 
         {/* Province Number  */}
@@ -293,9 +276,6 @@ export const Register = () => {
             <option value="4">4</option>
             <option value="5">5</option>
           </select>
-          <div className="invalid-feedback">
-            Please select a valid Province.
-          </div>
         </div>
 
         {/* Submit button  */}

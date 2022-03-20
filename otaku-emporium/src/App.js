@@ -11,6 +11,7 @@ import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import Register from "./components/Register";
 import LogIn from "./components/LogIn";
+import Account from "./pages/Account";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/login" component={LogIn}></Route>
           <Route path="/cart" component={Cart}></Route>
           <Route path="/wishList" component={WishList}></Route>
+          <Route path="/account" component={Account}></Route>
         </Switch>
         <div className="footer-bar"></div>
         <Footer />

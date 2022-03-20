@@ -1,14 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export const LogIn = () => {
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:4600/users/login", {
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data) {
+          console.log("success");
+          sessionStorage.setItem("login_status", true);
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <div className="mt-3">
         <h2> Log in to your account</h2>
         <hr />
       </div>
-      <form action="post" className="row g-3 needs-validation" noValidate>
+      <form
+        onSubmit={onSubmitHandler}
+        className="row g-3 needs-validation"
+        noValidate
+      >
         {/* Email Addres  */}
         <div className="col-md-8">
           <label htmlFor="validationCustomUsername" className="form-label">
@@ -23,7 +47,6 @@ export const LogIn = () => {
               placeholder="offical.otakuemporium@gmail.com"
               required
             />
-            <div className="invalid-feedback">Please choose a username.</div>
           </div>
         </div>
 
@@ -39,7 +62,6 @@ export const LogIn = () => {
             placeholder="*******"
             required
           />
-          <div className="valid-feedback">Looks good!</div>
         </div>
 
         {/* Log in button  */}
