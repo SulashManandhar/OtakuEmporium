@@ -24,7 +24,7 @@ module.exports = function (passport) {
           }
 
           if (isMatch) {
-            return done(null, user);
+            return done(null, user[0]);
           } else {
             return done(null, false, { msg: "Password is incorrect. " });
           }
@@ -35,21 +35,25 @@ module.exports = function (passport) {
 
   passport.serializeUser((user, done) => {
     console.log("Serializing the user..");
-    console.log(user);
-    done(null, user);
+    console.log(user.id);
+    done(null, user.id);
   });
 
   passport.deserializeUser((id, done) => {
     console.log(id);
     SQLquery = "Select * from users where id = ?";
-    db.query(SQLquery, [id], (err, result) => {
-      if (err) {
-        return err;
-      }
-      return done(null, result);
-    });
-    User.findById(id, (err, user) => {
-      done(err, user);
+    db.query(SQLquery, [id], (err, user) => {
+      const userInformation = {
+        id: user[0].id,
+        fname: user[0].fname,
+        lname: user[0].lname,
+        email: user[0].email,
+        phone: user[0].phone,
+        province: user[0].province,
+        district: user[0].district,
+        location: user[0].location,
+      };
+      return done(err, userInformation);
     });
   });
 

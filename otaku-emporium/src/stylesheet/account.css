@@ -7,3 +7,7 @@
     font-size: 1.2em;
     height: 16;
 }
+
+.pointer {
+    cursor: pointer;
+}

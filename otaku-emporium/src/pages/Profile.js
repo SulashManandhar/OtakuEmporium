@@ -13,16 +13,6 @@ export default class Profile extends Component {
     window.location.reload();
   };
   render() {
-    return (
-      <>
-        <div className="register-container">
-          {sessionStorage.getItem("login_status") === "true" ? (
-            <Account Logout={this.Logout} />
-          ) : (
-            <LogIn />
-          )}
-        </div>
-      </>
-    );
+    return <>profile</>;
   }
 }

@@ -66,13 +66,16 @@ header .header-2 {
         font-size: 17px;
     }
     .container-fluid .collapse .navbar-text {
-        font-size: 1.9em;
+        font-size: 1em;
     }
 }
 
 @media screen and (max-width: 900px) {
     .header-1 .navbar .container-fluid .d-flex input {
         width: 300px;
+    }
+    .container-fluid .collapse .navbar-text .white-color {
+        font-size: 1.6em;
     }
 }
 

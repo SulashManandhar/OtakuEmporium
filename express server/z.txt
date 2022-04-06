@@ -247,7 +247,8 @@ INSERT INTO slide_show(
     "/images/slide5.jpg"
 );
 
-CREATE TABLE nav_links(id int not null primary key auto_increment,
+CREATE TABLE nav_links(
+    id int not null primary key auto_increment,
     
     tab_name varchar(12) not null,
     tab_link varchar(12) not null
@@ -269,3 +270,20 @@ INSERT INTO nav_links(
 (?, ?);
 
 
+CREATE TABLE user_wishlist(
+    id int not null primary key auto_increment,
+    user_id int not null,
+    item_id int not null,
+    category varchar(16) not null,
+    foreign key (user_id) references users(id) 
+)
+
+INSERT INTO user_wishlist(
+    USER_ID,
+    ITEM_ID,
+    CATEGORY
+) VALUE (
+    ?,
+    ?,
+    ?
+);

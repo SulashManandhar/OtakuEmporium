@@ -9,3 +9,10 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+
+/* //user profile  */
+
+.model-body p {
+    text-align: left !important;
+}

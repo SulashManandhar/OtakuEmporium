@@ -3,10 +3,18 @@ import "../stylesheet/register.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-export const Register = () => {
+export const Register = (props) => {
   const [errors, setErrors] = useState([]);
+  const [errorMessages, setErrorMessages] = useState([]);
 
-  useEffect(() => {}, [errors]);
+  useEffect(() => {
+    let errorMessages = [];
+    errors.forEach((item, index) => {
+      errorMessages.push(<li key={index}>{item.msg}</li>);
+    });
+    setErrorMessages(errorMessages);
+  }, [errors]);
+
   const submit = (e) => {
     e.preventDefault();
     axios
@@ -25,14 +33,11 @@ export const Register = () => {
         console.log(res);
         if (res.data !== true) {
           setErrors(res.data);
-
-          // console.log(errors);
         } else {
           const message =
             "User account is now registered..." + <br /> + "Now you can login ";
           window.alert(message);
-
-          window.location.reload();
+          props.history.push("/login");
         }
       })
       .catch((err) => {
@@ -48,11 +53,21 @@ export const Register = () => {
       <br />
 
       {/* display errors */}
-      <div className="errors">
-        {errors.forEach((item) => {
-          <span>{item.msg}</span>;
-        })}
-      </div>
+      {errorMessages.length ? (
+        <div
+          className="alert alert-warning alert-dismissible fade show"
+          role="alert"
+        >
+          {/* error message  */}
+          <ul>{errorMessages}</ul>
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+      ) : null}
 
       <form className="row g-3 needs-validation" noValidate onSubmit={submit}>
         {/* First Name  */}

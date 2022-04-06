@@ -4,13 +4,16 @@ const fileUpload = require("express-fileupload");
 var cors = require("cors");
 const mysql2 = require("mysql2");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const passportLocal = require("passport-local").Strategy;
 
 //API
 const accessories = require("./API/Accessories");
 const users = require("./API/User");
 const apparels = require("./API/Apparels");
 const drinkware = require("./API/Drinkware");
+const wishlist = require("./API/WishList");
 const passport = require("passport");
 
 const app = express();
@@ -22,9 +25,6 @@ const db = mysql2.createPool({
   password: "",
   database: "otaku_db",
 });
-
-//passport congif
-require("./API/Passport")(passport);
 
 //app use
 app.use(fileUpload());
@@ -41,15 +41,20 @@ app.use(
   })
 );
 
+app.use(cookieParser("secret"));
+
 //passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+//passport congif
+require("./API/Passport")(passport);
 
 //Routes
 app.use("/accessories", accessories);
 app.use("/users", users);
 app.use("/apparels", apparels);
 app.use("/drinkware", drinkware);
+app.use("/wishlist", wishlist);
 
 //welcome screen
 const display = `
@@ -58,8 +63,14 @@ const display = `
     <span>Server is started...</span>
 `;
 app.get("/", (req, res) => res.send(display));
-app.get("/success", (req, res) => res.send(true));
-app.get("/fail", (req, res) => res.send(false));
+app.get("/success", (req, res) => {
+  console.log(req.user);
+  res.send(true);
+});
+app.get("/fail", (req, res) => {
+  console.log(req.user);
+  res.send(false);
+});
 
 //UPLOAD ENDPOINT
 app.post("/uploads", cors(), (req, res) => {
@@ -67,7 +78,7 @@ app.post("/uploads", cors(), (req, res) => {
     return res.status(400).json({ msg: "No file upload" });
   }
   const file = req.files.file;
-  file.mv(`${__dirname}/otaku-admin/public/uploads/${file.name}`, (err) => {
+  file.mv(`${__dirname}/otaku-emporium/public/uploads/${file.name}`, (err) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);

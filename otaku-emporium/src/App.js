@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import Register from "./components/Register";
 import LogIn from "./components/LogIn";
 import Account from "./pages/Account";
+import ProductDetails from "./components/ProductDetails";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/cart" component={Cart}></Route>
           <Route path="/wishList" component={WishList}></Route>
           <Route path="/account" component={Account}></Route>
+          <Route path="/productDetails" component={ProductDetails}></Route>
         </Switch>
         <div className="footer-bar"></div>
         <Footer />

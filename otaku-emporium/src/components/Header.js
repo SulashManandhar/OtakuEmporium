@@ -43,6 +43,7 @@ class Header extends Component {
           <div className="header-1">
             <nav className="navbar">
               <div className="container-fluid">
+                {/* Logo of page  */}
                 <Link className="navbar-brand" to="/">
                   <img
                     src={process.env.PUBLIC_URL + "images/logo.png"}
@@ -50,6 +51,8 @@ class Header extends Component {
                     className="d-inline-block align-text-top"
                   />
                 </Link>
+
+                {/* Search bar  */}
                 <form className="d-flex">
                   <input
                     className="form-control me-2"
@@ -99,23 +102,23 @@ class Header extends Component {
 
                   {/* Side text  */}
                   <span className="navbar-text">
-                    <div className="dropdown text-end">
-                      <Link
-                        to="/profile"
-                        className="d-block link-dark text-decoration-none" //extra classname: dropdown-toggle
-                        id="dropdownUser1"
-                        // data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <img
-                          src="https://github.com/mdo.png"
-                          alt="user_profile_img"
-                          width="32"
-                          height="32"
-                          className="rounded-circle"
-                        />
-                      </Link>
-                    </div>
+                    <Link
+                      to={
+                        sessionStorage.getItem("user") ? "/account" : "/login"
+                      }
+                      className=" link-dark text-decoration-none" //extra classname: dropdown-toggle
+                      id="dropdownUser1"
+                      // data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <img
+                        src="https://github.com/mdo.png"
+                        alt="user_profile_img"
+                        width="32"
+                        height="32"
+                        className="rounded-circle"
+                      />
+                    </Link>
                   </span>
                   <span className="navbar-text">
                     <Link to="/cart" className="white-color">
