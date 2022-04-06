@@ -1,1 +1,1 @@
-# OtakuEmporium
+# OtakuEmporium (E-commerce website)
