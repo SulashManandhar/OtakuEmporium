@@ -3,7 +3,7 @@ import axios from "axios";
 import "../../stylesheets/apparel.css";
 import "../../stylesheets/bootstrap.min.css";
 
-export const AddApparel = () => {
+export const AddNewArrival = () => {
   //States
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("Choose File");
@@ -18,7 +18,7 @@ export const AddApparel = () => {
   //adds information to the json (name of product, description, image path, size color)
   const addData = () => {
     axios
-      .post("http://localhost:4600/apparels/addApparels", {
+      .post("http://localhost:4600/newArrival/addNewArrival", {
         name: document.getElementById("product-name").value,
         category: document.getElementById("product-category").value,
         description: document.getElementById("product-description").value,
@@ -68,7 +68,7 @@ export const AddApparel = () => {
   return (
     <div className="apparel-body">
       <div>
-        <span className="header">Add a apparel</span>
+        <span className="header">Add a NewArrival</span>
         <hr />
       </div>
 
@@ -223,4 +223,4 @@ export const AddApparel = () => {
     </div>
   );
 };
-export default AddApparel;
+export default AddNewArrival;

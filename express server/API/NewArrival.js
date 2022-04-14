@@ -2,33 +2,32 @@ const express = require("express");
 const router = express.Router();
 const db = require("../DB");
 
-//Apparels
-//getApparels
-router.get("/getApparels", (req, res) => {
-  const getApparels = "SELECT * FROM apparels";
-  db.query(getApparels, (err, result) => {
+router.get("/getNewArrival", (req, res) => {
+  const sqlSelect = "SELECT * FROM new_arrival";
+  db.query(sqlSelect, (err, result) => {
     if (err) {
       console.log(err);
       return res.send(err);
     }
-    res.send(result);
+    return res.send(result);
   });
 });
 
-router.get("/getApparels/:id", (req, res) => {
+//get 1 particular product
+router.get("/getNewArrival/:id", (req, res) => {
   const id = req.params.id;
-  const getApparels = `SELECT * FROM apparels where id = ?`;
-  db.query(getApparels, [id], (err, result) => {
+  const sqlSelect = `SELECT * FROM new_arrival where id = ?`;
+  db.query(sqlSelect, [id], (err, result) => {
     if (err) {
       console.log(err);
       return res.send(err);
     }
-    res.send(result);
+    return res.send(result);
   });
 });
 
 //addApparels
-router.post("/addApparels", (req, res) => {
+router.post("/addNewArrival", (req, res) => {
   const name = req.body.name;
   const category = req.body.category;
   const description = req.body.description;
@@ -39,19 +38,19 @@ router.post("/addApparels", (req, res) => {
   const price = req.body.price;
   const imagePath = req.body.imagePath;
 
-  const addApparels = `INSERT INTO apparels (
-          name,
-          category,
-          description,
-          color,
-          small_size,
-          medium_size,
-          large_size,
-          price,
-          imagePath
-          ) VALUE (?,?,?,?,?,?, ?,?,?);`;
+  const sqlInsert = `INSERT INTO new_arrival (
+            name,
+            category,
+            description,
+            color,
+            small_size,
+            medium_size,
+            large_size,
+            price,
+            imagePath
+            ) VALUE (?,?,?,?,?,?, ?,?,?);`;
   db.query(
-    addApparels,
+    sqlInsert,
     [
       name,
       category,
@@ -73,8 +72,8 @@ router.post("/addApparels", (req, res) => {
   );
 });
 
-//edit apparels
-router.put("/editApparels", (req, res) => {
+//edit newArrival
+router.put("/editNewArrival", (req, res) => {
   const id = req.body.id;
   const name = req.body.name;
   const category = req.body.category;
@@ -86,21 +85,21 @@ router.put("/editApparels", (req, res) => {
   const price = req.body.price;
   const imagePath = req.body.imagePath;
 
-  const updateApparel = `Update apparels SET 
-      name = ?,
-      category = ?,
-      description = ?,
-      color = ?,
-      small_size = ?,
-      medium_size = ?,
-      large_size = ?,
-      price = ?,
-      imagePath = ?
-      WHERE
-          id = ?;`;
+  const sqlUpdate = `Update new_arrival SET 
+        name = ?,
+        category = ?,
+        description = ?,
+        color = ?,
+        small_size = ?,
+        medium_size = ?,
+        large_size = ?,
+        price = ?,
+        imagePath = ?
+        WHERE
+            id = ?;`;
 
   db.query(
-    updateApparel,
+    sqlUpdate,
     [
       name,
       category,
@@ -124,33 +123,16 @@ router.put("/editApparels", (req, res) => {
 });
 
 //deleteApparels
-router.delete("/deleteApparels/:apparelId", (req, res) => {
-  const apparelId = req.params.apparelId;
-  //res.send(apparelId);
-  const sqlDelete = `DELETE FROM apparels WHERE id = ?;`;
-  db.query(sqlDelete, [apparelId], (err, result) => {
+router.delete("/newArrival/:id", (req, res) => {
+  const id = req.params.id;
+
+  const sqlDelete = `DELETE FROM new_arrival WHERE id = ?;`;
+  db.query(sqlDelete, [id], (err, result) => {
     if (err) {
       console.log(err);
       return res.status(500).send(err);
     }
     return res.send(result);
-  });
-});
-
-router.put("/updateFeature", (req, res) => {
-  const id = req.body.id;
-  const is_featured = req.body.is_featured;
-  const changeFeature = `Update apparels SET is_featured = ? WHERE id = ?;`;
-  db.query(changeFeature, [is_featured, id], (err, result) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).send(err);
-    }
-    if (id === null && is_featured === null) {
-      console.log("Id is null");
-      return res.status(500).send("Null value");
-    }
-    res.send(result);
   });
 });
 

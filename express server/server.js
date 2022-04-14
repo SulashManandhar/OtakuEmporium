@@ -14,6 +14,8 @@ const users = require("./API/User");
 const apparels = require("./API/Apparels");
 const drinkware = require("./API/Drinkware");
 const wishlist = require("./API/WishList");
+const cart = require("./API/AddToCart");
+const newArrival = require("./API/NewArrival");
 const passport = require("passport");
 
 const app = express();
@@ -55,6 +57,8 @@ app.use("/users", users);
 app.use("/apparels", apparels);
 app.use("/drinkware", drinkware);
 app.use("/wishlist", wishlist);
+app.use("/cart", cart);
+app.use("/newArrival", newArrival);
 
 //welcome screen
 const display = `

@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../DB");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
-const { redirect } = require("express/lib/response");
+const nodemailer = require("nodemailer");
 
 //Users
 //fetch user data
@@ -29,7 +29,249 @@ router.put("/banUser", (req, res) => {
       console.log(err);
       return res.status(500).send(err);
     }
+
     res.send(result);
+  });
+});
+
+//verify user
+router.get("/isuserVerified/:id", (req, res) => {
+  const id = req.params.id;
+  sqlSelect = `Select * from users where id = ?`;
+  db.query(sqlSelect, id, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send(err);
+    }
+    console.log(result);
+    const user = {
+      fname: result[0].fname,
+      lname: result[0].lname,
+      email: result[0].email,
+
+      verified: result[0].verified,
+    };
+    return res.status(200).send(user);
+  });
+});
+
+//generate random number
+function generateRandom(min = 1109, max = 9989) {
+  // find diff
+  let difference = max - min;
+
+  // generate random number
+  let rand = Math.random();
+
+  // multiply with difference
+  rand = Math.floor(rand * difference);
+
+  // add with min value
+  rand = rand + min;
+
+  return rand;
+}
+
+//email verification code
+router.post("/sendEmailVerificationCode", (req, res) => {
+  const { fname, email } = req.body;
+  randomNumber = generateRandom();
+  const output = `
+  <div>
+  <h1>Otaku Emporium</h1>
+  <h4>Hi ${fname},</h4>
+  <p>
+    We are happy that you signed up for Otaku Emporium. TO start
+    exploring the Otaku Emporium, Please confirm your email address.
+  </p>
+  <h1>${randomNumber}</h1>
+  <p>Paste the above code to verify your Account.</p>
+</div>
+  `;
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: "suyash.manandhar@outlook.com",
+    service: "hotmail",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "suyash.manandhar@outlook.com", // generated ethereal user
+      pass: "Sula$h123", // generated ethereal password
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  // send mail with defined transport object
+  let info = transporter.sendMail(
+    {
+      from: '"Otaku Emporium-get your order now!" <suyash.manandhar@outlook.com>', // sender address
+      to: email, // list of receivers
+      subject: "Otaku Emporium - Verify your Account", // Subject line
+      text: "Email verification ", // plain text body
+      html: output, // html body
+    },
+    (err, success) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(success);
+        res.json({
+          success: true,
+          verificationCode: randomNumber,
+        });
+      }
+    }
+  );
+
+  // console.log("Message sent: %s", info.messageId);
+  // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+});
+
+router.post("/resetUserPassword", (req, res) => {
+  let errors = [];
+  const { id, password, confirmPassword } = req.body;
+  if (password.length < 6) {
+    errors.push({ msg: "Password should be atleast 6 characters." });
+  }
+  if (password !== confirmPassword) {
+    errors.push({ msg: "Passwords do not match" });
+  }
+  if (errors.length > 0) {
+    console.log(errors);
+    return res.status(500).json({
+      success: false,
+      errors,
+    });
+  } else {
+    let userNewPassword = password;
+
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(userNewPassword, salt, (err1, hash) => {
+        if (err1) {
+          console.log(err);
+        }
+        userNewPassword = hash;
+        const update = `Update users SET password = ? WHERE id = ?`;
+        db.query(update, [userNewPassword, id], (e, r) => {
+          if (e) {
+            console.log(e);
+            return res.status(500).send(e);
+          }
+          return res.send({ success: true });
+        });
+      });
+    });
+  }
+});
+
+//change password verification code
+router.post("/sendChangePasswordVerificationCode", (req, res) => {
+  const { fname, email } = req.body;
+  randomNumber = generateRandom();
+  const output = `
+  <div>
+  <h1>Otaku Emporium</h1>
+  <h4>Hi ${fname},</h4>
+  <p>
+    Forgot Password?
+    We received a request to reset the password for your account.
+    <br/>
+    To reset your password, copy the below code and paste in the webite.
+  </p>
+  <h1>${randomNumber}</h1>
+  <p>Paste the above code to change your Account password.</p>
+</div>
+  `;
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: "suyash.manandhar@outlook.com",
+    service: "hotmail",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "suyash.manandhar@outlook.com", // generated ethereal user
+      pass: "Sula$h123", // generated ethereal password
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
+
+  // send mail with defined transport object
+  let info = transporter.sendMail(
+    {
+      from: '"Otaku Emporium-get your order now!" <suyash.manandhar@outlook.com>', // sender address
+      to: email, // list of receivers
+      subject: "Otaku Emporium - Reset your password", // Subject line
+      text: "Reset Password ", // plain text body
+      html: output, // html body
+    },
+    (err, success) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(success);
+        res.json({
+          success: true,
+          verificationCode: randomNumber,
+        });
+      }
+    }
+  );
+
+  // console.log("Message sent: %s", info.messageId);
+  // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+});
+
+//change user verification to true
+router.post("/setUserVerificationTrue/:id", (req, res) => {
+  const id = req.params.id;
+  sqlUpdate = `update users set verified = 1 where id = ?; `;
+  db.query(sqlUpdate, id, (error, result) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+    console.log(result);
+    res.status(200).send(result);
+  });
+});
+
+//verifyEmailAddress; check if email address exits
+router.post("/verifyEmailAddress", (req, res) => {
+  const email = req.body.email;
+  sqlSelect = `Select * from users where email = ?`;
+  db.query(sqlSelect, email, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send(err);
+    }
+    console.log(result);
+    if (!result.length) {
+      return res.status(500).json({
+        success: false,
+        msg: "Email address is not registered.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      user: {
+        id: result[0].id,
+        fname: result[0].fname,
+        lname: result[0].lname,
+        email: result[0].email,
+        phone: result[0].phone,
+        province: result[0].province,
+        district: result[0].district,
+        location: result[0].location,
+        profile_image: result[0].profile_image,
+      },
+    });
   });
 });
 
@@ -168,9 +410,10 @@ router.post("/addUser", (req, res) => {
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (!user) {
-      return res
-        .status(403)
-        .json({ msg: "Incorrect credentials", success: false });
+      return res.status(403).json({
+        msg: "Incorrect credentials or Account is not available",
+        success: false,
+      });
     }
 
     req.logIn(user, (err) => {
@@ -190,6 +433,7 @@ router.post("/login", (req, res, next) => {
             province: user.province,
             district: user.district,
             location: user.location,
+            profile_image: user.profile_image,
           },
         });
       }
@@ -313,4 +557,21 @@ router.post("/updateUser", (req, res) => {
     });
   }
 });
+
+router.post("/updateUserProfile", (req, res) => {
+  const { id, profile_image } = req.body;
+  sqlUpdate = `update users set profile_image = ? where id = ?;`;
+  db.query(sqlUpdate, [profile_image, id], (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send(err);
+    }
+    console.log(res);
+    return res.status(200).json({
+      profile_image,
+      success: true,
+    });
+  });
+});
+
 module.exports = router;

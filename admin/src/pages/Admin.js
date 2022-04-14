@@ -18,17 +18,29 @@ import "../stylesheets/header.css";
 
 //components and pages
 import Dashboard from "../components/Dashboard";
-import Setting from "../components/Setting";
 import Users from "../components/Users";
+
+//import Apparels component
 import Apparels from "../components/Apparels";
-import Accessories from "../components/Accessories";
 import AddApparel from "../components/Add/AddApparel";
 import { EditApparel } from "../components/Edit/EditApparel";
+
+//import new Arrival components
+import NewArrival from "../components/NewArrival";
+import AddNewArrival from "../components/Add/AddNewArrival";
+import { EditNewArrival } from "../components/Edit/EditNewArrival";
+
+//import Accessories component
+import Accessories from "../components/Accessories";
 import { AddAccessories } from "../components/Add/AddAccessories";
 import { EditAccessories } from "../components/Edit/EditAccessories";
+
+//import Drinkware component
 import Drinkware from "../components/Drinkware";
 import AddDrinkware from "../components/Add/AddDrinkware";
 import { EditDrinkware } from "../components/Edit/EditDrinkware";
+
+//Other component
 import NavLink from "./NavLink";
 import AddLink from "../components/Add/AddLink";
 import SlideShow from "./SlideShow";
@@ -113,6 +125,9 @@ export default class Index extends Component {
                 </li>
 
                 <li>
+                  <Link to="/newArrival">New Arrival</Link>
+                </li>
+                <li>
                   <Link to="/apparels">Apparels</Link>
                 </li>
                 <li>
@@ -174,23 +189,6 @@ export default class Index extends Component {
               </ul>
             </li>
 
-            {/* Settings  */}
-            <li>
-              <Link to="/setting">
-                <i>
-                  <AiOutlineSetting />
-                </i>
-                <span className="link_name">Setting</span>
-              </Link>
-              <ul className="sub-menu blank">
-                <li>
-                  <Link className="link_name" to="/setting">
-                    Setting
-                  </Link>
-                </li>
-              </ul>
-            </li>
-
             {/* Logout  */}
             <li>
               <a href="#">
@@ -221,8 +219,6 @@ export default class Index extends Component {
 
           <Switch>
             <Route exact path="/" component={Dashboard}></Route>
-
-            <Route exact path="/setting" component={Setting}></Route>
             <Route exact path="/users" component={Users}></Route>
 
             {/* Apparels */}
@@ -238,6 +234,11 @@ export default class Index extends Component {
             <Route path="/drinkware" component={Drinkware}></Route>
             <Route path="/addDrinkware" component={AddDrinkware}></Route>
             <Route path="/editDrinkware" component={EditDrinkware}></Route>
+
+            {/*NewArrival*/}
+            <Route path="/newArrival" component={NewArrival}></Route>
+            <Route path="/addNewArrival" component={AddNewArrival}></Route>
+            <Route path="/editNewArrival" component={EditNewArrival}></Route>
 
             <Route exact path="/navLinks" component={NavLink}></Route>
             <Route exact path="/addLink" component={AddLink}></Route>

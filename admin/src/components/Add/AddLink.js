@@ -53,13 +53,14 @@ export default class AddLink extends Component {
       //validation of link name and address
       this.state.data.map((item) => {
         if (item.tab_name.toUpperCase() === tab_name.toUpperCase()) {
-          check = true;
           console.log("Please enter a unique tab_name");
+          return (check = true);
         }
         if (item.tab_link.toUpperCase() === tab_link.toUpperCase()) {
-          check = true;
           console.log("Please enter a unique tab_link");
+          return (check = true);
         }
+        return null;
       });
       if (!check) {
         this.addData(); //adding data to the database

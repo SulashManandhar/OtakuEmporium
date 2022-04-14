@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import style from "../stylesheets/users.module.css";
-import {
-  AiOutlinePlusCircle,
-  AiOutlineMinusCircle,
-  AiOutlineEdit,
-} from "react-icons/ai";
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
 import { Link } from "react-router-dom";
 export default class NavLink extends Component {
   constructor(props) {

@@ -15,7 +15,10 @@ function LogIn({ Login, error }) {
       <form onSubmit={submitHandler}>
         <div className={`${style.loginMainContainer}`}>
           <div className={`${style.loginHeader}`}>
-            <img src={process.env.PUBLIC_URL + "/images/logo.png"} />
+            <img
+              src={process.env.PUBLIC_URL + "/images/logo.png"}
+              alt="otaku-emporium-symbol"
+            />
             <span> Admin </span>
           </div>
           <div className={`${style.inputContainer}`}>
@@ -47,7 +50,7 @@ function LogIn({ Login, error }) {
             />
           </div>
           {/* error message  */}{" "}
-          {error != "" ? (
+          {error !== "" ? (
             <div className={`${style.errorDisplay}`}> {error} </div>
           ) : (
             ""

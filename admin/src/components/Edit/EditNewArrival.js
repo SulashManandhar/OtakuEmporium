@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
+
 import axios from "axios";
 import "../../stylesheets/apparel.css";
 import "../../stylesheets/bootstrap.min.css";
 
-export const EditAccessories = (props) => {
+export const EditNewArrival = (props) => {
+  //props sent from NewArrival
   const [editId, setEditId] = useState(0);
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState("Choose File");
-  const [accessoriesData, setAccessoriesData] = useState([]);
+  const [apparelData, setApparelData] = useState([]);
 
   useEffect(() => {
     setEditId(props.location.hash.slice(1));
@@ -18,9 +20,9 @@ export const EditAccessories = (props) => {
   useEffect(() => {
     if (editId) {
       axios
-        .get(`http://localhost:4600/accessories/getAccessories/${editId}`)
+        .get(`http://localhost:4600/newArrival/getNewArrival/${editId}`)
         .then((res) => {
-          setAccessoriesData(res.data[0]);
+          setApparelData(res.data[0]);
         })
         .catch((err) => {
           console.log(err);
@@ -30,12 +32,15 @@ export const EditAccessories = (props) => {
 
   const addData = () => {
     axios
-      .put("http://localhost:4600/accessories/editAccessories", {
+      .put("http://localhost:4600/newArrival/editNewArrival", {
         id: editId,
         name: document.getElementById("product-name").value,
         category: document.getElementById("product-category").value,
         description: document.getElementById("product-description").value,
         color: document.getElementById("product-color").value,
+        smallSize: document.getElementById("small").checked ? 1 : 0,
+        mediumSize: document.getElementById("medium").checked ? 1 : 0,
+        largeSize: document.getElementById("large").checked ? 1 : 0,
         price: document.getElementById("product-price").value,
         imagePath: `/uploads/${filename}`,
       })
@@ -59,11 +64,10 @@ export const EditAccessories = (props) => {
         },
       });
 
-      console.log("File Uploaded");
-
       addData(); //adding data to the database
+      console.log("File Uploaded");
       window.alert("Successfully Added to the database");
-      window.location.reload();
+      //window.location.reload();
     } catch (err) {
       if (err.response.status === 500) {
         console.log("Error with the server");
@@ -78,14 +82,14 @@ export const EditAccessories = (props) => {
   const onChange = (e) => {
     setFile(e.target.files[0]);
     setFilename(e.target.files[0].name);
+    // console.log(`Filename:${filename}`);
   };
 
   return (
     <>
       <div className="apparel-body">
         <div>
-          <span className="header">Edit a Accessories</span>
-
+          <span className="header">Edit a apparel</span>
           <hr />
         </div>
 
@@ -100,7 +104,7 @@ export const EditAccessories = (props) => {
               className="form-control"
               id="product-name"
               aria-describedby="Name of Product"
-              defaultValue={accessoriesData.name}
+              defaultValue={apparelData.name}
             />
           </div>
 
@@ -115,13 +119,13 @@ export const EditAccessories = (props) => {
               aria-label="Category selection"
               required
             >
-              <option defaultValue={accessoriesData.category}>
-                {accessoriesData.category}
+              <option defaultValue={apparelData.category}>
+                {apparelData.category}
               </option>
-              <option value="Masks">Masks</option>
-              <option value="Keychain">Keychain</option>
-              <option value="Wallpaper">Wallpaper</option>
-              <option value="ActionFigure">ActionFigure</option>
+              <option value="SweatShirt">SweatShirt</option>
+              <option value="Hoodie">Hoodie</option>
+              <option value="Full-sleeve T-shirt">Full-sleeve T-shirt</option>
+              <option value="Half-sleeve T-shirt">Half-sleeve T-shirt</option>
             </select>
           </div>
 
@@ -136,7 +140,7 @@ export const EditAccessories = (props) => {
               id="product-color"
               autoComplete="off"
               aria-describedby="Available Color of Product"
-              defaultValue={accessoriesData.color}
+              defaultValue={apparelData.color}
             />
           </div>
 
@@ -151,8 +155,64 @@ export const EditAccessories = (props) => {
               id="product-price"
               autoComplete="off"
               aria-describedby="Price of Product"
-              defaultValue={accessoriesData.price}
+              defaultValue={apparelData.price}
             />
+          </div>
+
+          {/* Product Size */}
+          <div
+            className="mb-3"
+            id="product-size"
+            role="group"
+            aria-label="Product Size selection"
+          >
+            <label htmlFor="ProductSize" className="form-label">
+              Product Size:
+            </label>
+            <br />
+            <input
+              type="checkbox"
+              value="small"
+              className="btn-check"
+              id="small"
+              autoComplete="off"
+            />
+            <label
+              id="checkbox"
+              className="btn btn-outline-success"
+              htmlFor="small"
+            >
+              Small
+            </label>
+            <input
+              type="checkbox"
+              value="medium"
+              className="btn-check"
+              id="medium"
+              autoComplete="off"
+              defaultChecked
+            />
+            <label
+              id="checkbox"
+              className="btn btn-outline-success"
+              htmlFor="medium"
+            >
+              Medium
+            </label>
+            <input
+              type="checkbox"
+              value="large"
+              className="btn-check"
+              id="large"
+              autoComplete="off"
+            />
+            <label
+              id="checkbox"
+              className="btn btn-outline-success"
+              htmlFor="large"
+            >
+              Large
+            </label>
           </div>
 
           {/* Description */}
@@ -165,11 +225,10 @@ export const EditAccessories = (props) => {
               className="form-control"
               id="product-description"
               aria-describedby="Description of Product"
-              defaultValue={accessoriesData.description}
+              defaultValue={apparelData.description}
             />
           </div>
 
-          {/* Add Image  */}
           <div className="mb-3">
             <label htmlFor="formFile" className="form-label">
               Add a product image
@@ -178,12 +237,10 @@ export const EditAccessories = (props) => {
               className="form-control"
               type="file"
               id="formFile"
-              required
               onChange={onChange}
             />
           </div>
 
-          {/* Submit  */}
           <div className="mb-3">
             <button type="submit" className="btn btn-primary">
               Submit
