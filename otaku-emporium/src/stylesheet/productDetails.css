@@ -7,3 +7,11 @@
     cursor: pointer;
     color: red;
 }
+
+.color-span {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    border: solid 3px #dbd3d3;
+}

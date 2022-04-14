@@ -11,8 +11,11 @@ import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import Register from "./components/Register";
 import LogIn from "./components/LogIn";
+import ForgotPassword from "./components/ForgotPassword";
+
 import Account from "./pages/Account";
 import ProductDetails from "./components/ProductDetails";
+import { ResetPassword } from "./components/ResetPassword";
 
 function App() {
   return (
@@ -28,10 +31,13 @@ function App() {
           <Route path="/profile" component={Profile}></Route>
           <Route path="/register" component={Register}></Route>
           <Route path="/login" component={LogIn}></Route>
+          <Route path="/forgotPassword" component={ForgotPassword}></Route>
+
           <Route path="/cart" component={Cart}></Route>
           <Route path="/wishList" component={WishList}></Route>
           <Route path="/account" component={Account}></Route>
           <Route path="/productDetails" component={ProductDetails}></Route>
+          <Route path="/resetPassword" component={ResetPassword}></Route>
         </Switch>
         <div className="footer-bar"></div>
         <Footer />

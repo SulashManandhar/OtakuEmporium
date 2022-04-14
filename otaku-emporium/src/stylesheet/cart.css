@@ -1,0 +1,11 @@
+.cart-remove {
+    cursor: pointer;
+}
+
+.list-group .hover:hover {
+    background-color: #f2f2f2;
+}
+
+.list-group .position-absolute {
+    font-size: 14px;
+}

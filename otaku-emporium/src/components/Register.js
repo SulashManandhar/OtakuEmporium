@@ -45,7 +45,7 @@ export const Register = (props) => {
       });
   };
   return (
-    <>
+    <div className="container">
       <div className="mt-3">
         <h2>Register Now!!!</h2>
         <hr />
@@ -306,7 +306,7 @@ export const Register = (props) => {
           Have a account? <Link to="/login">Log in</Link>
         </span>
       </div>
-    </>
+    </div>
   );
 };
 

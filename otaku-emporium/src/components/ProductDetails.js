@@ -16,6 +16,8 @@ export const ProductDetails = (props) => {
   const pageLink = useSelector((state) => state.pageLink);
 
   const [isWishedIcon, setIsWishedIcon] = useState(false);
+  const [quantityValue, setQuantityValue] = useState(1);
+  const [size, setSize] = useState("none");
 
   //redirect back if product id is not found
   useEffect(() => {
@@ -108,6 +110,48 @@ export const ProductDetails = (props) => {
     }
   };
 
+  const handleAddToCart = () => {
+    if (productData.small_size) {
+      if (document.getElementById("small-size").checked) {
+        setSize("small");
+      } else if (document.getElementById("medium-size").checked) {
+        setSize("medium");
+      } else if (document.getElementById("large-size").checked) {
+        setSize("large");
+      } else {
+        setSize("none");
+      }
+    }
+    const d = new Date();
+
+    console.log(d.getDate());
+
+    const sendData = {
+      item_id: productData.id,
+      user_id: userData.id,
+      name: productData.name,
+      description: productData.description,
+      imagePath: productData.imagePath,
+      quantity: quantityValue,
+      price: productData.price,
+      color: productData.color,
+      size: size,
+      pageLink: pageLink,
+      date: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`,
+      time: `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`,
+    };
+    console.log(sendData);
+
+    axios
+      .post("http://localhost:4600/cart/add_to_cart", sendData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <div className="container mt-5 mb-4">
@@ -154,80 +198,123 @@ export const ProductDetails = (props) => {
               <br />
               {/* Color of the product  */}
               <div className="container">
-                <label htmlFor="color of the product">Available color: </label>
+                <label className=" fw-bold" htmlFor="color of the product">
+                  Color family:{" "}
+                </label>
                 <br />
-                <span className="color-span">{productData.color}</span>
+                <span
+                  className="color-span"
+                  style={{
+                    backgroundColor: productData.color,
+                  }}
+                ></span>
               </div>
 
               {/* product Size  */}
               {productData.small_size ? (
                 <div className="container mt-3">
-                  <span className="span">
-                    Available size: <br />
-                  </span>
+                  <label className="span fw-bold">Available size: </label>
+                  <br />
 
                   {/* Small size  */}
-                  <span className="me-3">
+
+                  <div className="form-check form-check-inline">
                     <input
+                      className="form-check-input"
                       type="radio"
-                      className="btn-check"
                       name="product-size"
-                      id="success-outlined"
-                      autoComplete="off"
+                      id="small-size"
+                      value="small"
                     />
-                    <label
-                      className="btn btn-outline-success mt-2"
-                      htmlFor="small size"
-                    >
+                    <label className="form-check-label " htmlFor="small-size">
                       Small
                     </label>
-                  </span>
+                  </div>
 
                   {/* Medium size  */}
-                  <span className="me-3">
+                  <div className="form-check form-check-inline">
                     <input
+                      className="form-check-input"
                       type="radio"
-                      className="btn-check"
                       name="product-size"
-                      id="success-outlined"
-                      autoComplete="off"
+                      id="medium-size"
+                      value="medium"
+                      defaultChecked
                     />
-                    <label
-                      className="btn btn-outline-success mt-2"
-                      htmlFor="medium size"
-                    >
+                    <label className="form-check-label " htmlFor="medium-size">
                       Medium
                     </label>
-                  </span>
+                  </div>
 
                   {/* Large size  */}
-                  <span className="me-3">
+                  <div className="form-check form-check-inline">
                     <input
+                      className="form-check-input"
                       type="radio"
-                      className="btn-check"
                       name="product-size"
-                      id="success-outlined"
-                      autoComplete="off"
+                      id="large-size"
+                      value="large"
                     />
-                    <label
-                      className="btn btn-outline-success mt-2"
-                      htmlFor="large size"
-                    >
+                    <label className="form-check-label " htmlFor="large-size">
                       Large
                     </label>
-                  </span>
+                  </div>
                 </div>
               ) : null}
+
+              {/* Quanity of a product  */}
+
+              <div className="container mt-3 mb-1">
+                <label htmlFor="color of the product" className="me-3 fw-bold">
+                  Quantity:
+                </label>
+
+                <span>
+                  {/*decrease the value of quantity by 1, if quantity value is 0 value is not changed; ie quantityValue*/}
+                  <button
+                    className="btn btn-group btn-secondary btn-sm me-3"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (quantityValue === 1) {
+                        return quantityValue;
+                      }
+                      setQuantityValue(quantityValue - 1);
+                    }}
+                  >
+                    -
+                  </button>
+
+                  {quantityValue}
+                  {/*increase the value of quantity by 1; ie quantityValue*/}
+
+                  <button
+                    className="btn btn-group btn-secondary btn-sm ms-3 "
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (quantityValue === 10) {
+                        return quantityValue;
+                      }
+                      setQuantityValue(quantityValue + 1);
+                    }}
+                  >
+                    +
+                  </button>
+                </span>
+              </div>
 
               {/* Button container  */}
               <div className="container mt-3 ">
                 <button
                   type="submit"
-                  className="btn btn-group btn-success me-2"
+                  className="btn btn-group btn-success btn-group-lg me-2"
                 >
                   Buy Now
                 </button>
-                <button type="submit" className="btn btn-group btn-warning">
+                <button
+                  type="button"
+                  className="btn btn-group btn-group-lg btn-warning"
+                  onClick={handleAddToCart}
+                >
                   Add to Cart
                 </button>
               </div>

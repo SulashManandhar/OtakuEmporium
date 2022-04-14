@@ -7,6 +7,7 @@ const userData = {
   province: 0,
   district: "",
   location: "",
+  profile_image: "https://github.com/mdo.png",
 };
 
 const loggedUserDataReducer = (state = userData, action) => {

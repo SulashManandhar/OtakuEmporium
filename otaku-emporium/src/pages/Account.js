@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { HiUsers } from "react-icons/hi";
 import { BiLogOut } from "react-icons/bi";
 import { AiOutlineTable } from "react-icons/ai";
+import { MdOutlineEmail } from "react-icons/md";
 
 //stylesheet
 import "../stylesheet/account.css";
@@ -17,6 +18,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setLoggedUserData } from "../actions/Action";
 import { ChangePassword } from "../components/ChangePassword";
+import { VerifyEmail } from "./VerifyEmail";
+import { ConfirmEmail } from "../components/ConfirmEmail";
 
 export const Account = (props) => {
   //redux state
@@ -24,6 +27,7 @@ export const Account = (props) => {
   const dispatch = useDispatch();
   //useState
   const [page, setPage] = useState("UserProfile");
+  const [code, setCode] = useState(null);
 
   const logOut = () => {
     axios
@@ -41,6 +45,7 @@ export const Account = (props) => {
             province: 0,
             district: "",
             location: "",
+            profile_image: "https://github.com/mdo.png",
           };
           //updating redux state
           dispatch(setLoggedUserData(reduxDefaultValue));
@@ -55,6 +60,17 @@ export const Account = (props) => {
   const setPageChangePassword = () => {
     setPage("ChangePassword");
     console.log(page);
+  };
+
+  const setPageVerifyAccount = () => {
+    setPage("ConfirmEmail");
+    console.log("clicked");
+    console.log(page);
+  };
+
+  const setVerificationCode = (code) => {
+    console.log("verifing");
+    setCode(code);
   };
 
   return (
@@ -101,6 +117,23 @@ export const Account = (props) => {
                   My orders
                 </li>
 
+                {/* Verify Email link  */}
+                <li
+                  className={
+                    page === "VerifyAccount"
+                      ? "nav-link nav-link link-dark active pointer"
+                      : "nav-link nav-link link-dark pointer"
+                  }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setPage("VerifyAccount");
+                    console.log("VerifyAccount");
+                  }}
+                >
+                  <MdOutlineEmail className="me-2 icon-size" />
+                  Verify Account
+                </li>
+
                 {/* Logout link */}
                 <li className="nav-item ">
                   <button
@@ -124,7 +157,24 @@ export const Account = (props) => {
               ""
             )}
             {page === "UserOrder" ? <UserOrders /> : ""}
-            {page == "ChangePassword" ? <ChangePassword logOut={logOut} /> : ""}
+            {page === "ChangePassword" ? (
+              <ChangePassword logOut={logOut} />
+            ) : (
+              ""
+            )}
+            {page === "VerifyAccount" ? (
+              <VerifyEmail
+                setPageVerifyAccount={setPageVerifyAccount}
+                setVerificationCode={setVerificationCode}
+              />
+            ) : (
+              ""
+            )}
+            {page === "ConfirmEmail" ? (
+              <ConfirmEmail code={code} setPage={setPage} />
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

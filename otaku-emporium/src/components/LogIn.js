@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -13,8 +13,7 @@ export const LogIn = (props) => {
   // const userData = useSelector((state) => state.loggedUserData);
   const dispatch = useDispatch();
 
-  const [errors, setErrors] = useState([]);
-  const [errorMessage, setErrorMessage] = useState([]);
+  const [errors, setErrors] = useState(null);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -31,34 +30,43 @@ export const LogIn = (props) => {
 
           //updating redux
           dispatch(setLoggedUserData(res.data.user));
-          setTimeout("", 5000);
-          props.history.push("/account");
+          setTimeout(props.history.push("/account"), 5000);
         }
       })
       .catch((err) => {
         if (err.response.data) {
           setErrors(err.response.data);
-          console.log("Error:", errors);
         }
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    setErrorMessage(<li>{errors.msg}</li>);
-    console.log(errorMessage);
-  }, [errors]);
 
   return (
     <>
       {sessionStorage.getItem("user") ? (
         props.history.push("/account")
       ) : (
-        <div>
+        <div className="container">
           <div className="mt-3">
             <h2> Log in to your account</h2>
             <hr />
           </div>
+
+          {errors ? (
+            <div
+              className="alert alert-warning alert-dismissible fade show"
+              role="alert"
+            >
+              {errors.msg}
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+            </div>
+          ) : null}
+
           <form
             onSubmit={onSubmitHandler}
             className="row g-3 needs-validation"
@@ -103,8 +111,13 @@ export const LogIn = (props) => {
               </button>
             </div>
           </form>
+          <div className="mb-3 border-b">
+            <span className="fs-6">
+              <Link to="/forgotPassword">Forgot Password?</Link>
+            </span>
+          </div>
 
-          <div className="mb-1">
+          <div className="mb-2">
             <span className="fs-6">
               Haven't registed yet? <Link to="/register">Register Now</Link>
             </span>
